@@ -1,0 +1,21 @@
+{
+  "name": "toquiz-jo",
+  "version": "1.0.0",
+  "description": "ToQuiz - منصة اختبارات التوجيهي",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build required for static HTML'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "quiz",
+    "education",
+    "vercel"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.3.1"
+  }
+}

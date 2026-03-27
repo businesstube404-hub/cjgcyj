@@ -40,7 +40,6 @@ header{background:var(--black);color:var(--white);padding:15px 0;position:sticky
 
 /* ===== LAYOUT ===== */
 .main-wrapper{display:grid;grid-template-columns:1fr;gap:20px;margin-top:25px;min-height:70vh;}
-@media(min-width:1024px){.main-wrapper{grid-template-columns:1fr 4fr 1fr;}}
 .split-layout{display:grid;gap:20px;grid-template-columns:1fr;}
 @media(min-width:768px){.split-layout{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.card{padding:20px;}.section-title{font-size:20px;}.cd-text{font-size:24px !important;}.stat-box h3{font-size:22px;}}
@@ -49,8 +48,6 @@ header{background:var(--black);color:var(--white);padding:15px 0;position:sticky
 .card{background:var(--card-bg);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);border:1px solid #e2e8f0;margin-top:20px;}
 .section-title{font-size:24px;font-weight:800;color:var(--black);margin-bottom:25px;border-right:5px solid var(--navy);padding-right:15px;}
 .sp-input{width:100%;padding:12px;border-radius:12px;border:1px solid #cbd5e1;outline:none;background:var(--bg);color:var(--text-main);}
-.ad-space{display:flex;flex-direction:column;gap:20px;min-height:280px;border-radius:var(--radius);}
-.ad-space-bottom{height:120px;width:100%;margin:20px auto;border-radius:var(--radius);}
 
 /* ===== COUNTDOWN ===== */
 .countdown-section{background:linear-gradient(135deg,var(--black),var(--navy));color:#fff;border-radius:var(--radius);padding:40px;text-align:center;box-shadow:var(--shadow);}
@@ -180,7 +177,6 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
   </div>
 </header>
 
-<!-- Salah Chat Modal -->
 <div id="salahModal" class="salah-modal hidden">
   <div class="salah-content">
     <div class="salah-header">
@@ -198,10 +194,8 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
 </div>
 
 <main class="container main-wrapper">
-  <aside class="ad-space"></aside>
   <div id="main-content">
 
-    <!-- ===== HOME ===== -->
     <div id="view-home" class="view-section">
       <div class="countdown-section" style="margin-bottom:30px;">
         <h2>كم بقي للامتحان الوزاري؟ ⏳</h2>
@@ -221,7 +215,6 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
       </div>
     </div>
 
-    <!-- ===== PROFILE ===== -->
     <div id="view-profile" class="view-section hidden">
       <h2 class="section-title">ملفك الشخصي 👤</h2>
       <div class="card" id="profile-setup" style="text-align:center;">
@@ -268,7 +261,6 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
       </div>
     </div>
 
-    <!-- ===== STUDY PLAN ===== -->
     <div id="view-study-plan" class="view-section hidden">
       <h2 class="section-title">صانع الخطة ومؤقت التركيز 📅⏱️</h2>
       <div class="split-layout">
@@ -302,13 +294,21 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
       </div>
     </div>
 
-    <!-- ===== SUBJECTS PAGE ===== -->
     <div id="view-subjects-page" class="view-section hidden">
       <h2 class="section-title">اختر المادة وابدأ التحدي 🎯</h2>
       <div class="subjects-grid" id="subjectsGrid"></div>
     </div>
 
-    <!-- ===== EXAM VIEW ===== -->
+    <div id="view-lessons" class="view-section hidden">
+      <div class="exam-header" style="justify-content: flex-start; gap: 20px;">
+        <button class="btn-outline" onclick="showView('subjects-page')" style="padding:8px 16px;font-size:13px;">
+          <i class="fa fa-arrow-right"></i> رجوع للمواد
+        </button>
+        <span id="lessonsSubjectName" style="font-weight:800;font-size:20px;"></span>
+      </div>
+      <div class="subjects-grid" id="lessonsGrid"></div>
+    </div>
+
     <div id="view-exam" class="view-section hidden">
       <div class="exam-header">
         <div style="display:flex;align-items:center;gap:12px;">
@@ -334,7 +334,6 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
       </div>
     </div>
 
-    <!-- ===== RESULT VIEW ===== -->
     <div id="view-result" class="view-section hidden">
       <div class="result-screen">
         <h2 style="margin-bottom:20px;font-size:26px;">نتيجة الامتحان 🏆</h2>
@@ -373,7 +372,6 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
       </div>
     </div>
 
-    <!-- ===== TIPS ===== -->
     <div id="view-tips" class="view-section hidden">
       <h2 class="section-title">نصائح وأدعية للنجاح 🌟</h2>
       <div class="tips-wrapper">
@@ -411,13 +409,11 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
     </div>
 
   </div>
-  <aside class="ad-space"></aside>
 </main>
 
-<div class="container ad-space-bottom"></div>
 <footer>
   <div class="container">
-    <p>جميع الحقوق محفوظة لمنصة <strong>ToQuiz</strong> © 2026 | منصتك الأولى لإنجاز التوجيهي بنجاح 🎓</p>
+    <p>جميع الحقوق محفوظة لمنصة <strong>ToQuiz</strong> © 2026</p>
   </div>
 </footer>
 
@@ -531,7 +527,7 @@ function updateStreak() {
 }
 
 // ======================================================
-// SUBJECTS GRID
+// SUBJECTS GRID (المعدل لربط المواد بالدروس)
 // ======================================================
 function renderSubjectsGrid() {
   const grid = document.getElementById('subjectsGrid');
@@ -539,28 +535,92 @@ function renderSubjectsGrid() {
   SUBJECTS.forEach(sub => {
     const card = document.createElement('div');
     card.className = 'subject-card';
-    const qCount = getSubjectQuestions(sub.name).length;
+    const qCount = getSubjectQuestions(sub.name).length; // يمكن تركها للإحصائيات أو إخفائها
     card.innerHTML = `
       <i class="fa ${sub.icon} subject-icon" style="color:${sub.color}"></i>
       <h3>${sub.name}</h3>
-      ${qCount > 0
-        ? `<div class="q-count"><i class="fa fa-question-circle"></i> ${qCount} سؤال</div>
-           <button class="btn" style="margin-top:12px;width:100%;background:${sub.color};">ابدأ الامتحان</button>`
-        : `<div class="q-count" style="color:#aaa;"><i class="fa fa-clock"></i> قريباً</div>`
-      }
+      <div class="q-count"><i class="fa fa-list"></i> عرض قائمة الدروس</div>
+      <button class="btn" style="margin-top:12px;width:100%;background:${sub.color};">استعراض الدروس</button>
     `;
-    if (qCount > 0) {
-      card.querySelector('.btn').addEventListener('click', () => startExam(sub));
-    } else {
-      card.style.opacity = '0.7';
-      card.style.cursor = 'default';
-    }
+    // بدلاً من startExam(sub) تم ربطها بعرض الدروس
+    card.querySelector('.btn').addEventListener('click', () => showLessonsView(sub));
     grid.appendChild(card);
   });
 }
 
 // ======================================================
-// EXAM ENGINE
+// === الميزات الجديدة (عرض الدروس وجلب JSON) ===
+// ======================================================
+const DUMMY_LESSONS = ['الدرس الأول', 'الدرس الثاني', 'الدرس الثالث', 'الدرس الرابع', 'الدرس الخامس'];
+
+function showLessonsView(subject) {
+  document.getElementById('lessonsSubjectName').innerText = `دروس مادة: ${subject.name}`;
+  const grid = document.getElementById('lessonsGrid');
+  grid.innerHTML = '';
+
+  DUMMY_LESSONS.forEach(lessonName => {
+    const card = document.createElement('div');
+    card.className = 'subject-card';
+    card.innerHTML = `
+      <i class="fa fa-book-open subject-icon" style="color:${subject.color}"></i>
+      <h3>${lessonName}</h3>
+      <button class="btn" style="margin-top:12px;width:100%;background:${subject.color};">بدء الأسئلة</button>
+    `;
+    card.querySelector('.btn').addEventListener('click', () => fetchAndStartLessonExam(subject, lessonName));
+    grid.appendChild(card);
+  });
+
+  showView('lessons');
+}
+
+async function fetchAndStartLessonExam(subject, lessonName) {
+  try {
+    const response = await fetch('questions.json');
+    if (!response.ok) throw new Error('فشل جلب ملف الأسئلة');
+    const data = await response.json();
+
+    // تصفية الأسئلة بحيث تتطابق المادة والدرس (مبني على فرضية أن ملف JSON يحمل هتين الخاصيتين)
+    // مثال لما يجب أن يكون عليه الـ JSON: {"subject": "الرياضيات", "lesson": "الدرس الأول", "question": ...}
+    const lessonQuestions = data.filter(q => q.subject === subject.name && q.lesson === lessonName);
+
+    if (lessonQuestions.length > 0) {
+      startLessonExam(subject, lessonQuestions);
+    } else {
+      alert(`عذراً، لا توجد أسئلة متوفرة حالياً لـ "${lessonName}" في مادة ${subject.name} داخل ملف questions.json.`);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('حدث خطأ أثناء تحميل ملف الأسئلة (questions.json). تأكد من صحة مسار وصيغة الملف.');
+  }
+}
+
+// دالة منفصلة لتهيئة الامتحان للدرس المختار دون تغيير الدالة الأصلية
+function startLessonExam(subject, questions) {
+  currentExam = {
+    subject: subject,
+    questions: questions,
+    currentIdx: 0,
+    userAnswers: new Array(questions.length).fill(null),
+    timerSec: 0,
+    timerInterval: null
+  };
+
+  clearInterval(currentExam.timerInterval);
+  currentExam.timerInterval = setInterval(() => {
+    currentExam.timerSec++;
+    const m = Math.floor(currentExam.timerSec / 60).toString().padStart(2, '0');
+    const s = (currentExam.timerSec % 60).toString().padStart(2, '0');
+    const el = document.getElementById('examTimerDisplay');
+    if (el) el.innerText = `${m}:${s}`;
+  }, 1000);
+
+  document.getElementById('examSubjectName').innerText = subject.name;
+  showView('exam');
+  renderQuestion();
+}
+
+// ======================================================
+// EXAM ENGINE (الأساسي)
 // ======================================================
 function startExam(subject) {
   const questions = getSubjectQuestions(subject.name);
@@ -838,7 +898,6 @@ async function sendSalah() {
     { role: "user", content: userText }
   ];
   try {
-    // Calls the server-side proxy — API key stays on the server, never exposed in browser
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -1,0 +1,23 @@
+{
+  "name": "toquiz-jo",
+  "version": "1.0.0",
+  "description": "ToQuiz - منصة اختبارات التوجيهي",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/businesstube404-hub/cjgcyj.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/businesstube404-hub/cjgcyj/issues"
+  },
+  "homepage": "https://github.com/businesstube404-hub/cjgcyj#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}

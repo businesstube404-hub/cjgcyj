@@ -1,14 +1,6 @@
 <!doctype html>
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CW73R8VG6Y"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CW73R8VG6Y');
-</script>
 <meta charset="utf-8"/>
 <title>ToQuiz — منصة اختبارات التوجيهي</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -48,6 +40,7 @@ header{background:var(--black);color:var(--white);padding:15px 0;position:sticky
 
 /* ===== LAYOUT ===== */
 .main-wrapper{display:grid;grid-template-columns:1fr;gap:20px;margin-top:25px;min-height:70vh;}
+@media(min-width:1024px){.main-wrapper{grid-template-columns:1fr 4fr 1fr;}}
 .split-layout{display:grid;gap:20px;grid-template-columns:1fr;}
 @media(min-width:768px){.split-layout{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.card{padding:20px;}.section-title{font-size:20px;}.cd-text{font-size:24px !important;}.stat-box h3{font-size:22px;}}
@@ -56,6 +49,8 @@ header{background:var(--black);color:var(--white);padding:15px 0;position:sticky
 .card{background:var(--card-bg);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);border:1px solid #e2e8f0;margin-top:20px;}
 .section-title{font-size:24px;font-weight:800;color:var(--black);margin-bottom:25px;border-right:5px solid var(--navy);padding-right:15px;}
 .sp-input{width:100%;padding:12px;border-radius:12px;border:1px solid #cbd5e1;outline:none;background:var(--bg);color:var(--text-main);}
+.ad-space{display:flex;flex-direction:column;gap:20px;min-height:280px;border-radius:var(--radius);}
+.ad-space-bottom{height:120px;width:100%;margin:20px auto;border-radius:var(--radius);}
 
 /* ===== COUNTDOWN ===== */
 .countdown-section{background:linear-gradient(135deg,var(--black),var(--navy));color:#fff;border-radius:var(--radius);padding:40px;text-align:center;box-shadow:var(--shadow);}
@@ -154,6 +149,37 @@ header{background:var(--black);color:var(--white);padding:15px 0;position:sticky
 
 /* ===== FOOTER ===== */
 footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-align:center;font-size:15px;border-top:4px solid var(--navy);}
+
+/* ===== SUBSCRIPTION SYSTEM ===== */
+.plan-badge{padding:8px 14px;border-radius:999px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff}
+.plan-badge .dot{width:9px;height:9px;border-radius:50%;background:#ffd700;display:inline-block}
+.plan-free{background:rgba(220,53,69,0.12);color:#dc3545;border-color:rgba(220,53,69,0.25)}
+.plan-premium{background:rgba(40,167,69,0.12);color:#28a745;border-color:rgba(40,167,69,0.25)}
+.plan-admin{background:rgba(102,16,242,0.12);color:#6610f2;border-color:rgba(102,16,242,0.25)}
+.access-panel{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.small-note{font-size:13px;color:var(--text-muted);line-height:1.7}
+.lock-box{background:rgba(220,53,69,0.08);border:1px solid rgba(220,53,69,0.2);padding:14px 16px;border-radius:14px;color:#dc3545;font-weight:700}
+.subscription-modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:1200;padding:16px}
+.subscription-card{background:var(--card-bg);width:min(100%,560px);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;border:1px solid #e2e8f0}
+.subscription-card header{position:static;background:linear-gradient(135deg,var(--black),var(--navy));border:none;padding:18px 22px}
+.subscription-card .body{padding:22px}
+.subscription-card .row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.subscription-card .row + .row{margin-top:12px}
+.subscription-card .code-input{width:100%;padding:14px 16px;border-radius:14px;border:1px solid #cbd5e1;background:var(--bg);color:var(--text-main);font-size:16px;letter-spacing:1px}
+.subscription-card .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.subscription-status{margin-top:14px;padding:12px 14px;border-radius:14px;font-weight:700;display:none}
+.subscription-status.ok{display:block;background:rgba(40,167,69,0.1);color:#28a745;border:1px solid rgba(40,167,69,0.25)}
+.subscription-status.err{display:block;background:rgba(220,53,69,0.1);color:#dc3545;border:1px solid rgba(220,53,69,0.25)}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.admin-stat{background:var(--bg);border:1px solid #e2e8f0;border-radius:16px;padding:16px}
+.admin-stat h3{font-size:28px;font-weight:900;color:var(--navy)}
+.code-table{width:100%;border-collapse:collapse;font-size:13px}
+.code-table th,.code-table td{border:1px solid #e2e8f0;padding:10px;text-align:right;vertical-align:top}
+.code-table th{background:var(--navy);color:#fff;position:sticky;top:0}
+.table-wrap{max-height:560px;overflow:auto;border-radius:16px;border:1px solid #e2e8f0}
+.badge-used{background:rgba(220,53,69,0.12);color:#dc3545;padding:4px 10px;border-radius:999px;font-weight:800}
+.badge-unused{background:rgba(40,167,69,0.12);color:#28a745;padding:4px 10px;border-radius:999px;font-weight:800}
+
 </style>
 </head>
 <body>
@@ -171,9 +197,11 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
         <button onclick="showView('study-plan')">الخطة والمؤقت</button>
         <button onclick="showView('tips')">نصائح وأدعية</button>
         <button onclick="showView('profile')">حسابي</button>
+        <button onclick="openSubscriptionModal()">تفعيل</button>
       </div>
       <div class="header-tools">
         <div class="streak-badge">🔥 <span id="streakCount">1</span> أيام</div>
+        <div id="topPlanBadge" class="plan-badge plan-free"><span class="dot"></span>Free</div>
         <button class="btn" style="padding:6px 16px;font-size:14px;border-radius:20px;" onclick="openSalah()">
           <i class="fa fa-robot"></i> صلاح
         </button>
@@ -201,7 +229,63 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
   </div>
 </div>
 
+
+<div id="subscriptionModal" class="subscription-modal hidden" aria-hidden="true">
+  <div class="subscription-card">
+    <header>
+      <div>
+        <h3 style="font-size:22px;margin-bottom:4px;">تفعيل الاشتراك</h3>
+        <p style="color:rgba(255,255,255,0.8);font-size:13px;">أدخل كود Premium / VIP أو كود المالك</p>
+      </div>
+    </header>
+    <div class="body">
+      <div class="row">
+        <div>
+          <label for="activationCodeInput" style="display:block;font-weight:800;margin-bottom:8px;">كود التفعيل</label>
+          <input id="activationCodeInput" class="code-input" placeholder="مثال: A1b2-..." autocomplete="off" spellcheck="false">
+        </div>
+        <div>
+          <button class="btn" onclick="activateWithCode()" style="white-space:nowrap;">تفعيل</button>
+        </div>
+      </div>
+      <p class="small-note" style="margin-top:12px;">التفعيل يُحفظ على هذا الجهاز/المتصفح. عند حذف بيانات المتصفح ستحتاج إدخال الكود مرة أخرى.</p>
+      <div id="subscriptionStatus" class="subscription-status"></div>
+      <div class="actions">
+        <button class="btn-outline" onclick="closeSubscriptionModal()">إغلاق</button>
+        <button class="btn-outline" onclick="showAdminModalFromShortcut()">لوحة الأدمن</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="adminModal" class="subscription-modal hidden" aria-hidden="true">
+  <div class="subscription-card">
+    <header>
+      <div>
+        <h3 style="font-size:22px;margin-bottom:4px;">دخول المالك</h3>
+        <p style="color:rgba(255,255,255,0.8);font-size:13px;">أدخل الكود الخاص لفتح لوحة الإدارة</p>
+      </div>
+    </header>
+    <div class="body">
+      <div class="row">
+        <div>
+          <label for="adminCodeInput" style="display:block;font-weight:800;margin-bottom:8px;">كود المالك</label>
+          <input id="adminCodeInput" class="code-input" placeholder="ADMIN CODE" autocomplete="off" spellcheck="false">
+        </div>
+        <div>
+          <button class="btn" onclick="unlockAdmin()" style="white-space:nowrap;">دخول</button>
+        </div>
+      </div>
+      <div id="adminStatus" class="subscription-status"></div>
+      <div class="actions">
+        <button class="btn-outline" onclick="closeAdminModal()">إغلاق</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <main class="container main-wrapper">
+  <aside class="ad-space"></aside>
   <div id="main-content">
 
     <div id="view-home" class="view-section">
@@ -235,14 +319,23 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
         <div class="card" style="margin-top:0;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;border-bottom:1px solid #e2e8f0;padding-bottom:15px;margin-bottom:20px;">
             <h3 style="color:var(--navy);font-size:22px;">مرحباً، <span id="display-student-name"></span>! 🎓</h3>
-            <div style="background:rgba(10,61,98,0.1);padding:8px 15px;border-radius:12px;font-weight:bold;">
-              <i class="fa fa-calendar-check" style="color:var(--navy);"></i> معك بالموقع من <span id="profile-days">0</span> أيام
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+              <div style="background:rgba(10,61,98,0.1);padding:8px 15px;border-radius:12px;font-weight:bold;">
+                <i class="fa fa-calendar-check" style="color:var(--navy);"></i> معك بالموقع من <span id="profile-days">0</span> أيام
+              </div>
+              <div id="planBadge" class="plan-badge plan-free"><span class="dot"></span>Free</div>
             </div>
           </div>
           <div style="text-align:center;padding:20px;background:rgba(255,165,0,0.1);border-radius:15px;border:1px dashed orange;margin-bottom:25px;">
             <h2 style="color:orange;margin-bottom:5px;"><i class="fa fa-fire"></i> ستريك <span id="profile-streak">0</span> أيام</h2>
             <p id="motivational-quote" style="font-weight:bold;font-size:18px;color:var(--text-main);"></p>
           </div>
+          <div class="access-panel">
+            <button class="btn" onclick="openSubscriptionModal()"><i class="fa fa-key"></i> تفعيل / تغيير الاشتراك</button>
+            <button class="btn-outline" onclick="updateSubscriptionUI()"><i class="fa fa-arrows-rotate"></i> تحديث الحالة</button>
+            <button class="btn-outline" onclick="showView('admin')" id="adminHint" style="display:none;"><i class="fa fa-lock"></i> لوحة الأدمن</button>
+          </div>
+          <div id="activationSummary" class="admin-grid"></div>
           <div class="stats-grid" style="box-shadow:none;border:none;padding:0;margin-bottom:25px;">
             <div class="stat-box" style="background:var(--bg);padding:15px;border-radius:15px;max-width:180px;">
               <i class="fa fa-file-alt" style="color:var(--navy);font-size:24px;"></i>
@@ -265,6 +358,46 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
             <h4 style="margin-bottom:10px;color:#dc3545;"><i class="fa fa-chart-line"></i> نقاط الضعف</h4>
             <ul id="weak-points-list" style="padding-right:20px;font-weight:bold;color:var(--text-muted);line-height:1.8;"></ul>
           </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="view-admin" class="view-section hidden">
+      <h2 class="section-title">لوحة المالك / الأدمن 🔐</h2>
+      <div class="card" style="margin-top:0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+          <div>
+            <h3 style="color:var(--navy);margin-bottom:4px;">أدوات الإدارة</h3>
+            <p class="small-note">عرض الأكواد، التفعيل، وحالة الاشتراكات المحفوظة محلياً على هذا الجهاز.</p>
+          </div>
+          <div class="access-panel">
+            <button class="btn-outline" onclick="copyCodesText()">نسخ الأكواد</button>
+            <button class="btn-outline" onclick="exportCodesJson()">تصدير JSON</button>
+            <button class="btn-outline" onclick="clearAdminCache()">تصفير محلي</button>
+          </div>
+        </div>
+
+        <div class="admin-grid">
+          <div class="admin-stat"><span>إجمالي الأكواد</span><h3 id="adminTotalCodes">0</h3></div>
+          <div class="admin-stat"><span>المستخدمة</span><h3 id="adminUsedCodes">0</h3></div>
+          <div class="admin-stat"><span>غير المستخدمة</span><h3 id="adminUnusedCodes">0</h3></div>
+          <div class="admin-stat"><span>الطلاب المفعلين</span><h3 id="adminActiveDevices">0</h3></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="code-table">
+            <thead>
+              <tr>
+                <th>الكود</th>
+                <th>النوع</th>
+                <th>الحالة</th>
+                <th>الجهاز / المعرّف</th>
+                <th>وقت التفعيل</th>
+              </tr>
+            </thead>
+            <tbody id="adminCodeTable"></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -305,16 +438,6 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
     <div id="view-subjects-page" class="view-section hidden">
       <h2 class="section-title">اختر المادة وابدأ التحدي 🎯</h2>
       <div class="subjects-grid" id="subjectsGrid"></div>
-    </div>
-
-    <div id="view-lessons" class="view-section hidden">
-      <div class="exam-header" style="justify-content: flex-start; gap: 20px;">
-        <button class="btn-outline" onclick="showView('subjects-page')" style="padding:8px 16px;font-size:13px;">
-          <i class="fa fa-arrow-right"></i> رجوع للمواد
-        </button>
-        <span id="lessonsSubjectName" style="font-weight:800;font-size:20px;"></span>
-      </div>
-      <div class="subjects-grid" id="lessonsGrid"></div>
     </div>
 
     <div id="view-exam" class="view-section hidden">
@@ -417,11 +540,13 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
     </div>
 
   </div>
+  <aside class="ad-space"></aside>
 </main>
 
+<div class="container ad-space-bottom"></div>
 <footer>
   <div class="container">
-    <p>جميع الحقوق محفوظة لمنصة <strong>ToQuiz</strong> © 2026</p>
+    <p>جميع الحقوق محفوظة لمنصة <strong>ToQuiz</strong> © 2026 | منصتك الأولى لإنجاز التوجيهي بنجاح 🎓</p>
   </div>
 </footer>
 
@@ -448,6 +573,7 @@ function getSubjectQuestions(subjectName) {
 // ======================================================
 // EXAM STATE
 // ======================================================
+
 let currentExam = {
   subject: null,
   questions: [],
@@ -458,13 +584,131 @@ let currentExam = {
 };
 
 // ======================================================
-// INIT
+// SUBSCRIPTION SYSTEM
 // ======================================================
-const GROQ_API_KEY = null; // Key removed — requests go through /api/chat proxy
+const PLAN_CATALOG = {
+  free: { name: 'Free', label: 'Free', className: 'plan-free', dailyBotLimit: 1, questionLimit: 20 },
+  premium: { name: 'Premium / VIP', label: 'Premium', className: 'plan-premium', dailyBotLimit: Infinity, questionLimit: Infinity },
+  admin: { name: 'Owner / Admin', label: 'Admin', className: 'plan-admin', dailyBotLimit: Infinity, questionLimit: Infinity }
+};
+const PREMIUM_CODES = ["15Sw-A5*y-UJ$H-IMs#-gA3f", "aPuL-qGzF-iTvV-g9S9-v$BP", "K1Ga-1M!h-Mxj*-zfTF-GuHa", "C8Cw-*QGo-Y6zR-P13p-3RJO", "io9$-2s8u-Z6fc-$uon-gQ9u", "wHvs-1bqw-OF5V-cAz2-AQi!", "MZL?-O#NN-S2MS-QG8P-tWpp", "o8EV-EWcj-m9bI-$%D3-14oY", "2MxU-mmM5-j!$@-@YlK-J99M", "dR8x-GzLv-a9X6-zD##-RCZ6", "4Ovu-8D8v-CzQz-fUmX-w4aw", "N3g5-e7Vd-%Bsx-rcu2-9yMX", "qTcR-MLDo-HUE6-9JAX-%NKq", "?vDr-16yp-?uKh-hpnF-@td8", "*#cJ-A6ax-0n3z-U*a*-MW1F", "Dd81-0h12-vADn-$3I0-T0$8", "SfQe-78ZN-oyrm-*kdz-QBXF", "71F0-Y4%9-UH2V-CHLV-bcCl", "UxPi-q?@8-nOvT-Y9ZZ-qyxA", "MQ#A-MQ9$-mhnc-7H0A-n?Dd", "ltz8-Gu$m-F3C9-NwcK-JmoC", "ziy9-cdQc-R7$1-6s?H-mwxO", "BnTU-7Yv9-OGIB-ID7L-bQy9", "1dkX-mI5!-VgaZ-V*6O-YaCt", "AK?M-BhLE-%okf-td#P-$vIa", "pWu#-gpPp-b7yl-DVoA-WU!1", "WT0O-ffZD-vJr@-1buJ-w1Wy", "fPI#-UddN-*rEi-7NJ1-gQf?", "F2qq-a4@C-2H7B-WW78-Hb0s", "CqH5-gAGB-RmgK-?NlC-m!jB", "dTwS-qMBL-uK@9-N6U?-4AH6", "YsOe-UMlE-8jDV-8QSO-v1DG", "quUl-D#t7-orsh-axa0-YXli", "lQTD-QVM5-tz$e-V1j9-Y0qy", "8x*t-Xdfp-TEBc-hQ!Y-I0sT", "NwYB-iWdG-G1lJ-Cvtv-%EHd", "Y#u!-@V38-hiv*-AWVE-%6$7", "PFAo-gZg9-ybUx-4yut-UzXL", "SBZ5-Lnq!-G3R$-Y5Zo-m2Qw", "v0H@-K5?$-0!nr-$Lsb-y%PL", "h%e4-3zT%-Ll9@-NjvZ-6Xwr", "xdOJ-zZY?-?Xi9-$sr*-9HhA", "t@e@-uzwi-YCsW-EA94-%MsW", "XJDe-WeEj-9gvW-WkE$-TN4K", "Zc5s-PCP1-iYfj-ak?j-XOyJ", "Gl3x-SPM!-5Q!S-OFG0-08gN", "GgNy-lif0-0tkG-dbRZ-qqm$", "6SfE-tQ0J-8#vu-KP5g-xn6T", "JLpy-*i9Y-Vlt0-zz%V-sIqc", "Zova-6ZHR-svcs-4zF6-5Qx3", "C%5r-eonS-jU%w-3lsC-?Mm@", "$s5V-k*5?-H43%-fsqo-GZR?", "L7XQ-D2fB-95K1-udJQ-VKGh", "rP9M-faYU-ljmX-K#F?-Wy8@", "m*0I-q?F!-tvVu-3?@L-DTSp", "%WP0-1cZu-RA5R-NXgm-vKD5", "WD1L-VXK!-WGUE-%J1l-xUa?", "8pkw-wtfZ-ANUd-Qkht-iqY*", "9pIp-mEiH-xEij-7dRX-u3T*", "ZD7@-EXvt-YAoa-XXgG-O2j1", "aaqq-uD2W-Agxn-C6dS-PUee", "rS90-!GQl-Ym92-R?Sg-5OTZ", "MC8c-V#@O-9VBw-j8%t-hi**", "iNrL-u*!k-VD!0-n2K1-Xtl0", "!o18-A!jV-4ir?-dFna-PXrP", "bP9H-mHLs-GuND-YWo9-611G", "w%Da-bo68-W8cF-v@Ho-Iua*", "dFRY-5ZcW-o%df-8K4T-#LqL", "i02*-MTdy-TuBi-j!M7-cnyb", "OA@P-VrSd-PBgj-eocb-Fbat", "W9K!-YZt3-exs7-r514-@k%9", "Ht0x-WEi9-cfE@-eAwK-JyXe", "cnvO-cM7S-SP%I-hq$O-tRCd", "HWgT-RHsy-9TZm-$ohG-37by", "xW$%-jeE@-ZeJ2-CTPj-Xeu$", "ZVLg-prI3-h$Qa-i8aq-hZ$N", "xKJq-V2n*-%LPX-BL0y-6Qt0", "XfzN-fo5d-TY$L-oPSG-eXuH", "lDXd-i9KB-@uNl-YeVx-4NTY", "EGK7-*nk7-fYc@-QNwS-e8CN", "htpb-UTLo-AGaO-9mx8-oSe1", "nStD-l!cn-XbBb-YF?$-PZiW", "xDpJ-nfVm-1jln-n7%%-egFP", "slVd-@M2A-ikKz-T@hD-eNu7", "%qp3-H5%i-jHAO-F26%-ADq3", "Rbw8-2tpc-YBhz-P2FZ-YYhi", "eFHz-f3wg-KN*Z-D2$b-Jxwj", "f#ql-FA$$-*u!Y-Rl#H-x?VE", "XoV?-3$Si-10xC-HjDB-zA$3", "KfJZ-W5TN-sR*N-o6x#-WkWG", "gwDc-#Ca$-4GAJ-6Scf-qrmG", "5L@b-rXoU-W@GZ-pfCd-RfKi", "fMF0-yRJE-Ev9#-68?t-6HqP", "Rr$q-WJkp-1gfN-Bssf-kNbG", "wLY2-o4f%-c$hA-8c9a-LjVX", "HS?V-FK3m-tR@1-V7WC-XDip", "fY?F-ia!p-y3#f-p#I!-6v0e", "VfFZ-In?E-QyCX-6PMm-Kq*%", "@@Ys-nz4K-#lXe-bJLE-fDd8", "mXN@-pAUT-9bUS-VlxO-MkHO"];
+const ADMIN_CODE = "OWN-iqUo-Qlbz-3nOT-4Vlt-iWQU-5Qu7";
+const SUBSCRIPTION_STORAGE_KEY = 'toquiz_subscription_state_v1';
+const DEVICE_STORAGE_KEY = 'toquiz_device_id_v1';
+const BOT_USAGE_PREFIX = 'toquiz_bot_usage_';
+const ADMIN_ACCESS_KEY = 'toquiz_admin_unlocked_v1';
+
+function getOrCreateDeviceId() {
+  let id = localStorage.getItem(DEVICE_STORAGE_KEY);
+  if (!id) {
+    id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'dev-' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    localStorage.setItem(DEVICE_STORAGE_KEY, id);
+  }
+  return id;
+}
+function loadSubscriptionState() {
+  const fallback = { tier: 'free', code: null, deviceId: getOrCreateDeviceId(), activatedAt: null, activatedBy: null };
+  try {
+    const raw = localStorage.getItem(SUBSCRIPTION_STORAGE_KEY);
+    if (!raw) return fallback;
+    const parsed = JSON.parse(raw);
+    return Object.assign(fallback, parsed || {});
+  } catch (e) { return fallback; }
+}
+function saveSubscriptionState(state) { localStorage.setItem(SUBSCRIPTION_STORAGE_KEY, JSON.stringify(state)); updateSubscriptionUI(); }
+function getCurrentPlan() { return loadSubscriptionState(); }
+function isAdminUser() { return localStorage.getItem(ADMIN_ACCESS_KEY) === '1' && getCurrentPlan().tier === 'admin'; }
+function isPremiumUser() { const tier = getCurrentPlan().tier; return tier === 'premium' || tier === 'admin'; }
+function getBotDailyLimitForCurrentUser() { const tier = getCurrentPlan().tier; return PLAN_CATALOG[tier] ? PLAN_CATALOG[tier].dailyBotLimit : 1; }
+function todayKey() { return new Date().toISOString().slice(0, 10); }
+function getBotUsage() { const key = BOT_USAGE_PREFIX + todayKey(); return parseInt(localStorage.getItem(key) || '0', 10) || 0; }
+function incrementBotUsage() { const key = BOT_USAGE_PREFIX + todayKey(); localStorage.setItem(key, String(getBotUsage() + 1)); }
+function resetExpiredBotUsageKeys() {}
+function setModalStatus(el, msg, type) { if (!el) return; el.className = 'subscription-status ' + (type === 'ok' ? 'ok' : 'err'); el.textContent = msg; }
+function openSubscriptionModal() { const modal = document.getElementById('subscriptionModal'); modal.classList.remove('hidden'); modal.setAttribute('aria-hidden', 'false'); const input = document.getElementById('activationCodeInput'); setTimeout(() => input && input.focus(), 50); }
+function closeSubscriptionModal() { const modal = document.getElementById('subscriptionModal'); modal.classList.add('hidden'); modal.setAttribute('aria-hidden', 'true'); }
+function openAdminModal() { const modal = document.getElementById('adminModal'); modal.classList.remove('hidden'); modal.setAttribute('aria-hidden', 'false'); const input = document.getElementById('adminCodeInput'); setTimeout(() => input && input.focus(), 50); }
+function closeAdminModal() { const modal = document.getElementById('adminModal'); modal.classList.add('hidden'); modal.setAttribute('aria-hidden', 'true'); }
+function showAdminModalFromShortcut() { closeSubscriptionModal(); openAdminModal(); }
+function activateWithCode() {
+  const input = document.getElementById('activationCodeInput');
+  const code = (input.value || '').trim();
+  const status = document.getElementById('subscriptionStatus');
+  if (!code) return setModalStatus(status, 'أدخل الكود أولاً.', 'err');
+  const planState = loadSubscriptionState();
+  const deviceId = getOrCreateDeviceId();
+  if (code === ADMIN_CODE) {
+    planState.tier = 'admin'; planState.code = code; planState.deviceId = deviceId; planState.activatedAt = new Date().toISOString(); planState.activatedBy = 'admin';
+    saveSubscriptionState(planState); localStorage.setItem(ADMIN_ACCESS_KEY, '1'); setModalStatus(status, 'تم تفعيل كود المالك بنجاح.', 'ok');
+    setTimeout(() => { closeSubscriptionModal(); showView('admin'); renderAdminDashboard(); }, 500); return;
+  }
+  if (!PREMIUM_CODES.includes(code)) return setModalStatus(status, 'الكود غير صحيح.', 'err');
+  const usedCodes = JSON.parse(localStorage.getItem('toquiz_used_codes_v1') || '{}');
+  if (usedCodes[code] && usedCodes[code].deviceId !== deviceId) return setModalStatus(status, 'هذا الكود مستخدم مسبقاً ولا يمكن إعادة استخدامه.', 'err');
+  planState.tier = 'premium'; planState.code = code; planState.deviceId = deviceId; planState.activatedAt = new Date().toISOString(); planState.activatedBy = 'student';
+  saveSubscriptionState(planState); usedCodes[code] = { status: 'used', deviceId, activatedAt: planState.activatedAt }; localStorage.setItem('toquiz_used_codes_v1', JSON.stringify(usedCodes));
+  setModalStatus(status, 'تم تفعيل الاشتراك بنجاح على هذا الجهاز.', 'ok'); setTimeout(() => closeSubscriptionModal(), 600);
+}
+function unlockAdmin() {
+  const input = document.getElementById('adminCodeInput');
+  const code = (input.value || '').trim();
+  const status = document.getElementById('adminStatus');
+  if (code !== ADMIN_CODE) return setModalStatus(status, 'كود المالك غير صحيح.', 'err');
+  const state = loadSubscriptionState();
+  state.tier = 'admin'; state.code = ADMIN_CODE; state.deviceId = getOrCreateDeviceId(); state.activatedAt = new Date().toISOString(); state.activatedBy = 'admin';
+  saveSubscriptionState(state); localStorage.setItem(ADMIN_ACCESS_KEY, '1'); setModalStatus(status, 'تم فتح لوحة المالك بنجاح.', 'ok');
+  setTimeout(() => { closeAdminModal(); showView('admin'); renderAdminDashboard(); }, 500);
+}
+function updateSubscriptionUI() {
+  const state = getCurrentPlan();
+  const badge = document.getElementById('planBadge');
+  if (badge) { badge.className = 'plan-badge ' + PLAN_CATALOG[state.tier].className; badge.innerHTML = `<span class="dot"></span>${PLAN_CATALOG[state.tier].name}`; }
+  const topBadge = document.getElementById('topPlanBadge');
+  if (topBadge) { topBadge.className = 'plan-badge ' + PLAN_CATALOG[state.tier].className; topBadge.innerHTML = `<span class="dot"></span>${PLAN_CATALOG[state.tier].label}`; }
+  const activationInfo = document.getElementById('activationSummary');
+  if (activationInfo) {
+    const codeText = state.code ? state.code : 'لا يوجد كود';
+    const dateText = state.activatedAt ? new Date(state.activatedAt).toLocaleString('ar-JO') : '—';
+    activationInfo.innerHTML = `
+      <div class="admin-stat"><span>الخطة الحالية</span><h3>${PLAN_CATALOG[state.tier].label}</h3></div>
+      <div class="admin-stat"><span>الكود المستخدم</span><h3 style="font-size:18px;word-break:break-all;">${codeText}</h3></div>
+      <div class="admin-stat"><span>آخر تفعيل</span><h3 style="font-size:18px;">${dateText}</h3></div>
+      <div class="admin-stat"><span>معرّف الجهاز</span><h3 style="font-size:18px;word-break:break-all;">${state.deviceId || getOrCreateDeviceId()}</h3></div>
+    `;
+  }
+  const adminHint = document.getElementById('adminHint');
+  if (adminHint) adminHint.style.display = isAdminUser() ? 'block' : 'none';
+  if (document.getElementById('adminCodeTable') && isAdminUser()) renderAdminDashboard();
+}
+function renderAdminDashboard() {
+  if (!isAdminUser()) return;
+  const usedCodes = JSON.parse(localStorage.getItem('toquiz_used_codes_v1') || '{}');
+  const rows = PREMIUM_CODES.map(code => {
+    const info = usedCodes[code]; const used = !!info;
+    const status = used ? '<span class="badge-used">used</span>' : '<span class="badge-unused">unused</span>';
+    const device = (info && info.deviceId) ? info.deviceId : '—';
+    const dt = (info && info.activatedAt) ? new Date(info.activatedAt).toLocaleString('ar-JO') : '—';
+    return `<tr><td style="font-family:monospace;word-break:break-all;">${code}</td><td>Premium / VIP</td><td>${status}</td><td style="font-family:monospace;word-break:break-all;">${device}</td><td>${dt}</td></tr>`;
+  }).join('');
+  const adminTable = document.getElementById('adminCodeTable'); if (adminTable) adminTable.innerHTML = rows;
+  const total = PREMIUM_CODES.length; const usedCount = Object.keys(usedCodes).filter(k => PREMIUM_CODES.includes(k)).length; const activeDevices = new Set(Object.values(usedCodes).map(v => v && v.deviceId).filter(Boolean)).size;
+  const totalEl = document.getElementById('adminTotalCodes'); const usedEl = document.getElementById('adminUsedCodes'); const unusedEl = document.getElementById('adminUnusedCodes'); const devicesEl = document.getElementById('adminActiveDevices');
+  if (totalEl) totalEl.innerText = total; if (usedEl) usedEl.innerText = usedCount; if (unusedEl) unusedEl.innerText = total - usedCount; if (devicesEl) devicesEl.innerText = activeDevices;
+}
+function copyCodesText() { const text = PREMIUM_CODES.join('\n'); navigator.clipboard.writeText(text).then(() => alert('تم نسخ الأكواد.')); }
+function exportCodesJson() {
+  const usedCodes = JSON.parse(localStorage.getItem('toquiz_used_codes_v1') || '{}');
+  const payload = { adminCode: ADMIN_CODE, codes: PREMIUM_CODES.map(code => ({ code, status: usedCodes[code] ? 'used' : 'unused', deviceId: usedCodes[code] ? usedCodes[code].deviceId : null, activatedAt: usedCodes[code] ? usedCodes[code].activatedAt : null })) };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'toquiz-codes.json'; a.click(); URL.revokeObjectURL(url);
+}
+function clearAdminCache() { if (!confirm('سيتم تصفير بيانات التفعيل المحلية فقط على هذا المتصفح. متابعة؟')) return; localStorage.removeItem(SUBSCRIPTION_STORAGE_KEY); localStorage.removeItem(ADMIN_ACCESS_KEY); localStorage.removeItem('toquiz_used_codes_v1'); updateSubscriptionUI(); renderAdminDashboard(); alert('تم التصفير المحلي.'); }
+function initSubscriptionSystem() { getOrCreateDeviceId(); resetExpiredBotUsageKeys(); updateSubscriptionUI(); document.addEventListener('keydown', (e) => { if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) { e.preventDefault(); openAdminModal(); } if (e.key === 'Escape') { closeSubscriptionModal(); closeAdminModal(); } }); }
+function showUpgradeLock(message) { return `<div class="lock-box">${message}</div><div style="margin-top:14px;"><button class="btn" onclick="openSubscriptionModal()">تفعيل الاشتراك</button></div>`; }
 document.addEventListener("DOMContentLoaded", async () => {
   initTheme();
   startMinistryCountdown();
   updateStreak();
+  initSubscriptionSystem();
   initProfile();
   // Load questions from external file, fall back to embedded
   try {
@@ -475,6 +719,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     // If fetch fails (e.g. opened as local file), ALL_QUESTIONS already has embedded data
   }
   renderSubjectsGrid();
+  updateSubscriptionUI();
+  if (isAdminUser()) renderAdminDashboard();
 });
 
 // ======================================================
@@ -486,6 +732,7 @@ function showView(id) {
   if (el) el.classList.remove('hidden');
   window.scrollTo(0, 0);
   if (id === 'profile') initProfile();
+  if (id === 'admin' && isAdminUser()) renderAdminDashboard();
 }
 
 // ======================================================
@@ -535,7 +782,7 @@ function updateStreak() {
 }
 
 // ======================================================
-// SUBJECTS GRID (المعدل لربط المواد بالدروس)
+// SUBJECTS GRID
 // ======================================================
 function renderSubjectsGrid() {
   const grid = document.getElementById('subjectsGrid');
@@ -543,96 +790,38 @@ function renderSubjectsGrid() {
   SUBJECTS.forEach(sub => {
     const card = document.createElement('div');
     card.className = 'subject-card';
-    const qCount = getSubjectQuestions(sub.name).length; // يمكن تركها للإحصائيات أو إخفائها
+    const qCount = getSubjectQuestions(sub.name).length;
     card.innerHTML = `
       <i class="fa ${sub.icon} subject-icon" style="color:${sub.color}"></i>
       <h3>${sub.name}</h3>
-      <div class="q-count"><i class="fa fa-list"></i> عرض قائمة الدروس</div>
-      <button class="btn" style="margin-top:12px;width:100%;background:${sub.color};">استعراض الدروس</button>
+      ${qCount > 0
+        ? `<div class="q-count"><i class="fa fa-question-circle"></i> ${qCount} سؤال</div>
+           <button class="btn" style="margin-top:12px;width:100%;background:${sub.color};">ابدأ الامتحان</button>`
+        : `<div class="q-count" style="color:#aaa;"><i class="fa fa-clock"></i> قريباً</div>`
+      }
     `;
-    // بدلاً من startExam(sub) تم ربطها بعرض الدروس
-    card.querySelector('.btn').addEventListener('click', () => showLessonsView(sub));
-    grid.appendChild(card);
-  });
-}
-
-// ======================================================
-// === الميزات الجديدة (عرض الدروس وجلب JSON) ===
-// ======================================================
-const DUMMY_LESSONS=['الدرس الأول','الدرس الثاني','الدرس الثالث','الدرس الرابع','الدرس الخامس','الدرس السادس','الدرس السابع','الدرس الثامن','الدرس التاسع','الدرس العاشر','الدرس الحادي عشر','الدرس الثاني عشر','الدرس الثالث عشر','الدرس الرابع عشر','الدرس الخامس عشر','الدرس السادس عشر','الدرس السابع عشر','الدرس الثامن عشر','الدرس التاسع عشر','الدرس العشرون','الدرس الحادي والعشرون','الدرس الثاني والعشرون','الدرس الثالث والعشرون','الدرس الرابع والعشرون','الدرس الخامس والعشرون','الدرس السادس والعشرون','الدرس السابع والعشرون'];
-
-function showLessonsView(subject) {
-  document.getElementById('lessonsSubjectName').innerText = `دروس مادة: ${subject.name}`;
-  const grid = document.getElementById('lessonsGrid');
-  grid.innerHTML = '';
-
-  DUMMY_LESSONS.forEach(lessonName => {
-    const card = document.createElement('div');
-    card.className = 'subject-card';
-    card.innerHTML = `
-      <i class="fa fa-book-open subject-icon" style="color:${subject.color}"></i>
-      <h3>${lessonName}</h3>
-      <button class="btn" style="margin-top:12px;width:100%;background:${subject.color};">بدء الأسئلة</button>
-    `;
-    card.querySelector('.btn').addEventListener('click', () => fetchAndStartLessonExam(subject, lessonName));
-    grid.appendChild(card);
-  });
-
-  showView('lessons');
-}
-
-async function fetchAndStartLessonExam(subject, lessonName) {
-  try {
-    const response = await fetch('questions.json');
-    if (!response.ok) throw new Error('فشل جلب ملف الأسئلة');
-    const data = await response.json();
-
-    // تصفية الأسئلة بحيث تتطابق المادة والدرس (مبني على فرضية أن ملف JSON يحمل هتين الخاصيتين)
-    // مثال لما يجب أن يكون عليه الـ JSON: {"subject": "الرياضيات", "lesson": "الدرس الأول", "question": ...}
-    const lessonQuestions = data.filter(q => q.subject === subject.name && q.lesson === lessonName);
-
-    if (lessonQuestions.length > 0) {
-      startLessonExam(subject, lessonQuestions);
+    if (qCount > 0) {
+      card.querySelector('.btn').addEventListener('click', () => startExam(sub));
     } else {
-      alert(`عذراً، لا توجد أسئلة متوفرة حالياً لـ "${lessonName}" في مادة ${subject.name} داخل ملف questions.json.`);
+      card.style.opacity = '0.7';
+      card.style.cursor = 'default';
     }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('حدث خطأ أثناء تحميل ملف الأسئلة (questions.json). تأكد من صحة مسار وصيغة الملف.');
-  }
-}
-
-// دالة منفصلة لتهيئة الامتحان للدرس المختار دون تغيير الدالة الأصلية
-function startLessonExam(subject, questions) {
-  currentExam = {
-    subject: subject,
-    questions: questions,
-    currentIdx: 0,
-    userAnswers: new Array(questions.length).fill(null),
-    timerSec: 0,
-    timerInterval: null
-  };
-
-  clearInterval(currentExam.timerInterval);
-  currentExam.timerInterval = setInterval(() => {
-    currentExam.timerSec++;
-    const m = Math.floor(currentExam.timerSec / 60).toString().padStart(2, '0');
-    const s = (currentExam.timerSec % 60).toString().padStart(2, '0');
-    const el = document.getElementById('examTimerDisplay');
-    if (el) el.innerText = `${m}:${s}`;
-  }, 1000);
-
-  document.getElementById('examSubjectName').innerText = subject.name;
-  showView('exam');
-  renderQuestion();
+    grid.appendChild(card);
+  });
 }
 
 // ======================================================
-// EXAM ENGINE (الأساسي)
+// EXAM ENGINE
 // ======================================================
 function startExam(subject) {
-  const questions = getSubjectQuestions(subject.name);
+  let questions = getSubjectQuestions(subject.name);
   if (!questions.length) { alert('لا توجد أسئلة لهذه المادة بعد.'); return; }
+
+  // تطبيق القيود للمشتركين المجانيين (20 سؤال كحد أقصى)
+  if (!isPremiumUser() && questions.length > 20) {
+    questions = questions.slice(0, 20);
+    alert('⚠️ الباقة المجانية تعرض 20 سؤالاً فقط في هذا الامتحان. فعّل باقة Premium / VIP لفتح جميع الأسئلة!');
+  }
 
   currentExam = {
     subject,
@@ -862,6 +1051,7 @@ function initProfile() {
     document.getElementById('profile-setup').classList.remove('hidden');
     document.getElementById('profile-dashboard').classList.add('hidden');
   }
+  updateSubscriptionUI();
 }
 
 function saveStudentName() {
@@ -889,22 +1079,41 @@ async function sendSalah() {
   let inp = document.getElementById('salahInput');
   let userText = inp.value.trim();
   if (!userText) return;
+
   let msgContainer = document.getElementById('salahMessages');
+
+  // تطبيق قيد الأسئلة اليومية للباقة المجانية (سؤال واحد فقط)
+  if (!isPremiumUser()) {
+    if (getBotUsage() >= 1) {
+      let limitMsg = document.createElement('div');
+      limitMsg.className = 'msg salah-msg';
+      limitMsg.innerHTML = '🤖 لقد استنفدت سؤالك المجاني لليوم. <a href="#" onclick="openSubscriptionModal()" style="color:var(--navy);font-weight:bold;text-decoration:underline;">فعّل باقة VIP</a> لأسئلة غير محدودة!';
+      msgContainer.appendChild(limitMsg);
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+      return;
+    } else {
+      incrementBotUsage(); // إضافة الاستخدام لليوم
+    }
+  }
+
   let userMsg = document.createElement('div');
   userMsg.className = 'msg user-msg';
   userMsg.innerText = userText;
   msgContainer.appendChild(userMsg);
   inp.value = '';
+
   let botMsg = document.createElement('div');
   botMsg.className = 'msg salah-msg';
   botMsg.innerHTML = '<i class="fa fa-spinner fa-spin" style="color:#ffd700"></i> صلاح بيفكر...';
   msgContainer.appendChild(botMsg);
   msgContainer.scrollTop = msgContainer.scrollHeight;
+
   let currentDate = new Date().toLocaleDateString('ar-JO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   const messages = [
     { role: "system", content: `أنت "صلاح"، مساعد دراسي ذكي لطلاب التوجيهي في الأردن وفلسطين. اللهجة أردنية/فلسطينية. أجب فقط على الأسئلة الدراسية. اليوم: ${currentDate}.` },
     { role: "user", content: userText }
   ];
+
   try {
     const response = await fetch('/api/chat', {
       method: 'POST',
@@ -944,6 +1153,12 @@ function startStudyTimer() {
 // STUDY PLAN
 // ======================================================
 function generatePlan() {
+  if (!isPremiumUser()) {
+    const resDiv = document.getElementById('sp-result');
+    resDiv.style.display = 'block';
+    resDiv.innerHTML = showUpgradeLock('صانع الخطة متاح فقط في Premium / VIP.');
+    return;
+  }
   const subject = document.getElementById('sp-subject').value;
   const total = parseInt(document.getElementById('sp-total').value);
   const completed = parseInt(document.getElementById('sp-completed').value) || 0;

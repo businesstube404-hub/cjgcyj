@@ -259,12 +259,12 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
       <div style="margin-top:20px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
         <label for="activationCodeInput" style="display:block;font-weight:900;margin-bottom:10px; font-size:18px;">أدخل كود VIP الخاص بك هنا:</label>
         <div style="display:flex; gap:10px;">
-          <input id="activationCodeInput" class="code-input" placeholder="مثال: A1b2-..." autocomplete="off" spellcheck="false" style="flex:1;">
+          <input id="activationCodeInput" class="code-input" placeholder="مثال: TQZ-..." autocomplete="off" spellcheck="false" style="flex:1;">
           <button class="btn" onclick="activateWithCode()" style="white-space:nowrap; padding: 0 30px; font-size:18px;">تفعيل <i class="fa fa-rocket"></i></button>
         </div>
       </div>
       
-      <p class="small-note" style="margin-top:15px; text-align:center;">التفعيل يُحفظ على هذا الجهاز. عند حذف بيانات المتصفح ستحتاج إدخال الكود مرة أخرى.</p>
+      <p class="small-note" style="margin-top:15px; text-align:center;">التفعيل يُحفظ على هذا الجهاز ويتم التحقق منه عبر الخادم. تأكد من إدخال الكود بشكل صحيح.</p>
       <div id="subscriptionStatus" class="subscription-status"></div>
       
       <div class="actions" style="justify-content:center; margin-top:20px;">
@@ -368,42 +368,23 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
       </div>
     </div>
 
-
     <div id="view-admin" class="view-section hidden">
       <h2 class="section-title">لوحة المالك / الأدمن 🔐</h2>
       <div class="card" style="margin-top:0;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
           <div>
             <h3 style="color:var(--navy);margin-bottom:4px;">أدوات الإدارة</h3>
-            <p class="small-note">عرض الأكواد، التفعيل، وحالة الاشتراكات المحفوظة محلياً على هذا الجهاز.</p>
+            <p class="small-note">واجهة مبسطة، الإحصائيات الكاملة تكون في لوحة Vercel.</p>
           </div>
           <div class="access-panel">
-            <button class="btn-outline" onclick="copyCodesText()">نسخ الأكواد</button>
-            <button class="btn-outline" onclick="exportCodesJson()">تصدير JSON</button>
-            <button class="btn-outline" onclick="clearAdminCache()">تصفير محلي</button>
+            <button class="btn-outline" onclick="clearAdminCache()">تسجيل الخروج</button>
           </div>
         </div>
-
-        <div class="admin-grid">
-          <div class="admin-stat"><span>إجمالي الأكواد</span><h3 id="adminTotalCodes">0</h3></div>
-          <div class="admin-stat"><span>المستخدمة</span><h3 id="adminUsedCodes">0</h3></div>
-          <div class="admin-stat"><span>غير المستخدمة</span><h3 id="adminUnusedCodes">0</h3></div>
-          <div class="admin-stat"><span>الطلاب المفعلين</span><h3 id="adminActiveDevices">0</h3></div>
-        </div>
-
-        <div class="table-wrap" style="margin-top: 20px;">
-          <table class="code-table">
-            <thead>
-              <tr>
-                <th>الكود</th>
-                <th>النوع</th>
-                <th>الحالة</th>
-                <th>الجهاز / المعرّف</th>
-                <th>وقت التفعيل</th>
-              </tr>
-            </thead>
-            <tbody id="adminCodeTable"></tbody>
-          </table>
+        <div class="admin-grid" style="margin-top: 20px;">
+             <div class="admin-stat">
+                <i class="fa fa-info-circle" style="color:var(--navy);font-size:30px;margin-bottom:10px;"></i>
+                <p>للتحكم الكامل بالأكواد (المستخدمة/المتبقية)، قم بزيارة لوحة تحكم <strong>Vercel KV</strong> الخاصة بك.</p>
+             </div>
         </div>
       </div>
     </div>
@@ -531,27 +512,16 @@ footer{background:#0a0a0a;color:#fff;padding:30px 15px;margin-top:20px;text-alig
 
 <script>
 // ======================================================
-// DATA: All Questions
+// DATA & STATE
 // ======================================================
 let ALL_QUESTIONS = [{"id":1,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"دلالة قوله تعالى: (وَلا تَمُوتُنَّ إِلا وَأَنْتُمْ مُسْلِمُونَ) في توجيه سلوك المسلم هي:","options":["أداء العبادات في أوقات محددة فقط","الاستمرارية والدوام على الالتزام بمبادئ الدين حتى الموت","التوبة عند اقتراب الأجل","الدعوة إلى الله في كل وقت"],"correct":1},{"id":2,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"المعنى الدقيق للفظ (شَفَا) في قوله تعالى: (وَكُنْتُمْ عَلَى شَفَا حُفْرَةٍ مِنَ النَّارِ) هو:","options":["قاع الشيء","حافة الشيء وطرفه","النجاة من الشيء","وسط الشيء"],"correct":1},{"id":3,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"الموقف الذي نزلت بسببه الآيات الكريمة يبرز محاولة أحد اليهود بث الفتنة، وهو:","options":["كعب بن الأشرف","حيي بن أخطب","شاس بن قيس","عبد الله بن أبي بن سلول"],"correct":2},{"id":4,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"دلالة التعبير بلفظ (جَمِيعًا) في قوله تعالى: (وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا) هي:","options":["تخصيص العلماء بالدعوة","مسؤولية كل فرد من أفراد الأمة في التمسك بالإسلام","الاجتماع في مكان واحد لأداء العبادة","توحيد المذاهب الفقهية"],"correct":1},{"id":5,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"الحكم الشرعي للأمر بالمعروف والنهي عن المنكر بناءً على قوله تعالى: (وَلْتَكُنْ مِنْكُمْ أُمَّةٌ...) هو:","options":["سنة مؤكدة","فرض عين على كل مسلم","مباح","فرض كفاية"],"correct":3},{"id":6,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"من أسماء سورة آل عمران المذكورة في الأحاديث النبوية:","options":["الكاشفة","الزهراء","المنجية","الفاضحة"],"correct":1},{"id":7,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"يشترط في الفئة التي تتولى الأمر بالمعروف والنهي عن المنكر شروط أساسية أهمها:","options":["الغلظة والشدة في الحق","العلم والأسلوب اللطيف","كثرة المال والجاه","التقدم في العمر"],"correct":1},{"id":8,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"الآية التي حذرت المسلمين من تكرار أخطاء الأمم السابقة كأهل الكتاب هي:","options":["(وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا)","(وَلْتَكُنْ مِنْكُمْ أُمَّةٌ يَدْعُونَ إِلَى الْخَيْرِ)","(وَلا تَكُونُوا كَالَّذِينَ تَفَرَّقُوا وَاخْتَلَفُوا)","(اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ)"],"correct":2},{"id":9,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"المفهوم الصحيح لـ 'المعروف' في الشريعة الإسلامية هو:","options":["ما تعارف عليه الناس حتى لو خالف الشرع","كل ما أمر به الشرع واستحسنه وحقق المصلحة","العادات والتقاليد القديمة فقط","القوانين الوضعية الحديثة"],"correct":1},{"id":10,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"قول النبي ﷺ للأوس والخزرج: 'أبدعوى الجاهلية وأنا بين أظهركم' يدل على:","options":["الغضب من نسيانهم العادات","خطورة التفرقة وترك نعمة الأخوة الإسلامية","الحث على القتال بشجاعة","أهمية العصبية القبلية في الحرب"],"correct":1},{"id":11,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"المعنى المراد بـ 'حبل الله' في قوله تعالى: (وَاعْتَصِمُوا بِحَبْلِ اللَّهِ) هو:","options":["القرآن الكريم والدين الإسلامي","الكعبة المشرفة","المسجد النبوي","الروابط القبلية"],"correct":0},{"id":12,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"سورة آل عمران من حيث مكان النزول هي سورة:","options":["مكية","مدنية","نصفها مكي ونصفها مدني","نزلت في الطائف"],"correct":1},{"id":13,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"النعمة التي ذكرت بها الآيات المسلمين بعد أن كانوا أعداء يقتتلون هي:","options":["نعمة المال","نعمة الإيمان وتأليف القلوب","نعمة الصحة","نعمة كثرة العدد"],"correct":1},{"id":14,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"التصرف الصحيح للمسلم عند رؤية شائعات تهدف لتقسيم المجتمع على وسائل التواصل هو:","options":["نشرها للتحذير منها","الرد عليها بالشتائم","التثبت من صحتها ونبذ ما يثير الفرقة","تجاهلها وتركها تنتشر"],"correct":2},{"id":15,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"عدد آيات سورة آل عمران هو:","options":["150 آية","286 آية","200 آية","120 آية"],"correct":2},{"id":16,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"المنهج النبوي في بناء المجتمع المتماسك في المدينة بدأ بـ:","options":["جمع الزكاة","بناء المسجد والمؤاخاة بين المهاجرين والأنصار","إعلان الحرب على الروم","بناء السدود"],"correct":1},{"id":17,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"غاية الأمر بالمعروف والنهي عن المنكر في المجتمع الإسلامي هي:","options":["تحقيق السيطرة السياسية","الفوز في الدنيا والنجاة في الآخرة (الفلاح)","جمع الأموال","التشهير بالمخطئين"],"correct":1},{"id":18,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"(فَأَلَّفَ بَيْنَ قُلُوبِكُمْ) تدل كلمة 'ألف' على:","options":["كتب ودوّن","جمع ووحّد","فرّق وشتت","حاسب وعاقب"],"correct":1},{"id":19,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"قوله تعالى: (مِنْ بَعْدِ مَا جَاءَهُمُ الْبَيِّنَاتُ) يقصد بالبينات:","options":["الأموال والكنوز","البراهين والدلائل الواضحة","الجيوش القوية","الأنساب العريقة"],"correct":1},{"id":20,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"من طرق التقوى (حَقَّ تُقَاتِهِ) كما فهمتها من الآيات:","options":["اعتزال الناس والعيش في الجبال","التزام أوامر الله واجتناب نواهيه في كل الأقوال والأفعال","أداء الفرائض وترك السنن","الصيام المتواصل دون إفطار"],"correct":1},{"id":21,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"إنشاء النبي ﷺ لسوق المدينة كان يهدف إلى:","options":["الاستفادة من خبرات اليهود الاقتصادية","تخليص المجتمع الإسلامي من السيطرة الاقتصادية الربوية لليهود","جمع الضرائب من التجار","احتكار التجارة للمهاجرين فقط"],"correct":1},{"id":22,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"المخاطبون في قوله تعالى: (وَلْتَكُنْ مِنْكُمْ أُمَّةٌ) هم:","options":["الأنبياء فقط","طائفة من المؤمنين تتوافر فيها الشروط","الملائكة","أهل الكتاب"],"correct":1},{"id":23,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"الآيات الكريمة تربط بقاء الأمة وقوتها بـ:","options":["التقدم التكنولوجي فقط","التمسك بالإسلام والاعتصام به","الانفتاح المطلق على الثقافات","التحالفات العسكرية فقط"],"correct":1},{"id":24,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"العذاب العظيم توعد الله به من:","options":["ترك الزواج","تفرقوا واختلفوا بعد مجيء الحق","خسر في التجارة","لم يحفظ القرآن كاملاً"],"correct":1},{"id":25,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"ماذا فعل الأنصار بعدما ذكّرهم النبي ﷺ بنعمة الإسلام عند الفتنة؟","options":["استمروا في القتال","طلبوا دية القتلى","ألقوا السلاح وندموا وعانق بعضهم بعضاً","تحاكموا إلى اليهود"],"correct":2},{"id":26,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"الفكرة المركزية في الآية 103 (وَاعْتَصِمُوا بِحَبْلِ اللَّهِ...) هي:","options":["تقوى الله","التمسك بالإسلام أساس وحدة الأمة","الدعوة إلى الخير","الاعتبار من الأمم السابقة"],"correct":1},{"id":27,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"الفكرة المركزية في الآية 105 (وَلا تَكُونُوا كَالَّذِينَ تَفَرَّقُوا...) هي:","options":["تقوى الله","التمسك بالإسلام","الاعتبار من الأمم السابقة","الدعوة إلى الخير"],"correct":2},{"id":28,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"ما يسقط الإثم عن الأمة بأكملها إذا قام به البعض يسمى:","options":["فرض عين","فرض كفاية","سنة مؤكدة","مباح"],"correct":1},{"id":29,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"تأجيل الشباب للفرائض لاعتقادهم أن العمر طويل يتنافى مع توجيه الآية:","options":["(وَلا تَمُوتُنَّ إِلا وَأَنْتُمْ مُسْلِمُونَ)","(وَلْتَكُنْ مِنْكُمْ أُمَّةٌ)","(فَأَلَّفَ بَيْنَ قُلُوبِكُمْ)","(وَاذْكُرُوا نِعْمَتَ اللَّهِ عَلَيْكُمْ)"],"correct":0},{"id":30,"subject":"التربية الإسلامية","lesson":"الدرس الأول","question":"من التطبيقات المعاصرة لقوله تعالى: (وَلَا تَفَرَّقُوا):","options":["مقاطعة المخالفين في الرأي الفقهي","نشر الإشاعات لتنبيه الناس","تعزيز الوحدة الوطنية والتصدي لخطاب الكراهية","العزلة عن المجتمع"],"correct":2},{"id":31,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"راوي الحديث هو الصحابي الجليل:","options":["عبد الله بن عمر","النعمان بن بشير","أبو هريرة","أنس بن مالك"],"correct":1},{"id":32,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"عمل النعمان بن بشير رضي الله عنه في عهد الدولة الأموية:","options":["قائداً للجيوش في الأندلس","قاضياً لدمشق وحاكماً للكوفة وحمص","والياً على مصر","خازناً لبيت المال"],"correct":1},{"id":33,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"المقصود بكلمة (المشتبهات) في الحديث الشريف:","options":["الأمور الواضحة الحل","الأمور الغامضة التي التبس حكمها وخفي على كثير من الناس","الكبائر والذنوب العظيمة","المباحات المطلقة"],"correct":1},{"id":34,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"معنى عبارة (استبرأ لدينه وعرضه):","options":["طلب براءة الاختراع","طلب السلامة لدينه من النقص ولعرضه من الطعن","برر أخطاءه للناس","ابتعد عن التجارة"],"correct":1},{"id":35,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"المعنى المقصود بـ (الحمى) في الحديث:","options":["المرض الشديد","الأرض الصالحة للرعي","الأرض المحمية التي يمنع الناس من دخولها إلا بإذن","الوطن الذي يعيش فيه الإنسان"],"correct":2},{"id":36,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"الفئة التي تعرف حكم 'المشتبهات' كما أشار الحديث وتستنبط أحكامها هم:","options":["جميع المسلمين","العباد والزهاد","الراسخون في العلم","الحكام فقط"],"correct":2},{"id":37,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"من الأمثلة المعاصرة على الورع واتقاء الشبهات:","options":["أكل الميتة عند الجوع","الامتناع عن شراء أسهم في شركة تتاجر ببعض المواد المحرمة","ترك صلاة الجماعة خشية الرياء","مقاطعة جميع المطاعم"],"correct":1},{"id":38,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"ضرب النبي ﷺ مثل 'الراعي الذي يرعى حول الحمى' ليحذر من:","options":["العمل في الرعي","التساهل في الوقوع في المشتبهات لأنه يقود للحرام","التعدي على أملاك الدولة","كثرة مخالطة الناس"],"correct":1},{"id":39,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"المضغة التي إذا صلحت صلح الجسد كله هي:","options":["العقل","الكبد","القلب","اللسان"],"correct":2},{"id":40,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"من وسائل إتقاء المشتبهات إذا التبست مسألة فقهية معاصرة على المسلم:","options":["سؤال دائرة الإفتاء والعلماء الموثوقين","الأخذ بالأسهل دائماً دون سؤال","سؤال عوام الناس","القرعة"],"correct":0},{"id":41,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"امتناع الإمام مالك عن الإفتاء في حكم 'خنزير البحر' كان بسبب:","options":["جهله بالحديث","تعارض الأدلة عنده بين الإباحة والتحريم (الاشتباه)","خوفه من السلطان","عدم وجود خنزير البحر في وقته"],"correct":1},{"id":42,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"ترك النبي ﷺ للتمرة الساقطة التي وجدها يعبر عن:","options":["تحريم أكل التمر الساقط مطلقاً","الورع واتقاء الشبهات خشية أن تكون من مال الصدقة","الخوف من التسمم","الزهد في الدنيا"],"correct":1},{"id":43,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"الفئة التي لا تتورع عن المشتبهات وتكثر منها، نتيجتها غالباً:","options":["النجاة يوم القيامة","الوقوع في الحرام الواضح لأن النفس تسول لها ذلك","تحصيل العلم الشرعي","زيادة في الرزق"],"correct":1},{"id":44,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"انقسام الأفعال إلى حلال واضح وحرام واضح ومشتبهات يعتمد على:","options":["العادات والتقاليد","وضوح حكمها الشرعي من عدمه","رأي أغلبية الناس","القوانين المدنية"],"correct":1},{"id":45,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"الصنف الذي يعتبر من الحرام الواضح الذي لا لبس فيه:","options":["البيع والإجارة","أكل لحم الخنزير والربا","شرب القهوة","شراء أسهم الشركات النقية"],"correct":1},{"id":46,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"توفي راوي الحديث النعمان بن بشير سنة:","options":["114 هـ","65 هـ","10 هـ","90 هـ"],"correct":1},{"id":47,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"معنى كلمة (يوشك):","options":["يبتعد","يقترب ويكاد","يشكك","يمنع"],"correct":1},{"id":48,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"صلاح الجوارح والابتعاد عن الشبهات يرتكز أساساً على:","options":["قوة البدن","كثرة المال","صلاح القلب واستقامته","كثرة العلاقات الاجتماعية"],"correct":2},{"id":49,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"من الأسباب التي تؤدي إلى فساد القلب وأمراضه:","options":["المحافظة على العبادات","تلاوة القرآن","الجهل، والإصرار على المعاصي","التوجه لله بالدعاء"],"correct":2},{"id":50,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"الآية التي ترشد إلى كيفية التخلص من قسوة القلب هي (أَلا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ)، وتدل على:","options":["اختيار الحلال","المداومة على ذكر الله","مجالسة الصالحين","قراءة القرآن"],"correct":1},{"id":51,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"قاعدة 'دع ما يريبك إلى ما لا يريبك' تتوافق تماماً مع توجيه الحديث في:","options":["معرفة الحلال الواضح","اتقاء الشبهات","صلاح القلب","ارتكاب المحرمات"],"correct":1},{"id":52,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"الإنسان الذي يخوض في الأمور الغامضة شرعياً يعرض نفسه لـ:","options":["الثناء والمدح","فقدان ثقة الناس به وتعرضه للطعن (الوقوع في العرض)","زيادة الإيمان","الاستقامة"],"correct":1},{"id":53,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"الخلاف الفقهي في بعض المسائل لا يعني وجود اشتباه في الشريعة نفسها، بل يعود إلى:","options":["نقص في الشريعة","تفاوت أفهام الناس ومداركهم للنصوص","تغير القرآن","عدم أهمية المسألة"],"correct":1},{"id":54,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"الموقف السليم عند إصابة جزء من الثوب بنجاسة لا يعلم صاحبها مكانها تحديداً:","options":["غسل أي جزء عشوائياً","ترك الصلاة فيه نهائياً دون غسله","غسل الثوب كله اتقاءً للشبهة","الصلاة فيه كما هو"],"correct":2},{"id":55,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"من الأعمال التي تعين على صلاح القلب 'اختيار الحلال الطيب'، ويدل عليه قوله تعالى:","options":["(وَاقِيمُوا الصَّلاةَ)","(كُلُوا مِمَّا فِي الأَرْضِ حَلالاً طَيِّبًا)","(أَفَلا يَتَدَبَّرُونَ الْقُرْآنَ)","(فَادْعُوا اللَّهَ مُخْلِصِينَ)"],"correct":1},{"id":56,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"'فمن اتقى الشبهات فقد استبرأ لدينه وعرضه' تفيد أسلوباً بلاغياً وغرضه:","options":["التخيير","التحذير والتنفير","الحث والترغيب في الورع","التوبيخ"],"correct":2},{"id":57,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"معنى (محارمه) في قوله: 'ألا وإن حمى الله محارمه':","options":["أقاربه من النساء","المعاصي التي حرمها الله تعالى","أوقات الصلاة","المساجد"],"correct":1},{"id":58,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"شخص يتعامل بعقود تجارية إلكترونية جديدة غير واضحة المعالم الشرعية ويستمر فيها دون سؤال، يصنف ضمن:","options":["الفئة التي تتورع عن الشبهات","الفئة التي لا تتورع عن الشبهات","الراسخون في العلم","المبتدعون"],"correct":1},{"id":59,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"أهمية القلب في جسد الإنسان كما وصفها النبي ﷺ:","options":["أنه العضو الأكبر حجماً","أنه مركز تدفق الدم فقط","أنه المتحكم في استقامة الجوارح وفسادها","أنه لا يتأثر بالذنوب"],"correct":2},{"id":60,"subject":"التربية الإسلامية","lesson":"الدرس الثاني","question":"العرض المذكور في (وعرضه) يقصد به:","options":["ماله وتجارته","سمعته ومكانته بين الناس","عائلته فقط","بدنه"],"correct":1}];
 
-// ======================================================
-// SUBJECTS CONFIG (qIds populated after JSON loads)
-// ======================================================
 const SUBJECTS = [
   { id: 'deen',    name: 'التربية الإسلامية', icon: 'fa-mosque',     color: '#1a7a4a' },
   { id: 'math',    name: 'الرياضيات',         icon: 'fa-calculator', color: '#0a3d62' },
   { id: 'arabic',  name: 'اللغة العربية',      icon: 'fa-language',   color: '#7b2d8b' },
   { id: 'history', name: 'تاريخ الأردن',      icon: 'fa-landmark',   color: '#c0392b' }
 ];
-
-function getSubjectQuestions(subjectName) {
-  return ALL_QUESTIONS.filter(q => q.subject === subjectName);
-}
-
-// ======================================================
-// EXAM STATE
-// ======================================================
 
 let currentExam = {
   subject: null,
@@ -566,17 +536,17 @@ let currentExam = {
 // ======================================================
 // SUBSCRIPTION SYSTEM
 // ======================================================
-const PLAN_CATALOG = {
-  free: { name: 'Free', label: 'Free', className: 'plan-free', dailyBotLimit: 1, questionLimit: 20 },
-  premium: { name: 'Premium / VIP', label: 'Premium', className: 'plan-premium', dailyBotLimit: Infinity, questionLimit: Infinity },
-  admin: { name: 'Owner / Admin', label: 'Admin', className: 'plan-admin', dailyBotLimit: Infinity, questionLimit: Infinity }
-};
-const PREMIUM_CODES = ["15Sw-A5*y-UJ$H-IMs#-gA3f", "aPuL-qGzF-iTvV-g9S9-v$BP", "K1Ga-1M!h-Mxj*-zfTF-GuHa", "C8Cw-*QGo-Y6zR-P13p-3RJO", "io9$-2s8u-Z6fc-$uon-gQ9u", "wHvs-1bqw-OF5V-cAz2-AQi!", "MZL?-O#NN-S2MS-QG8P-tWpp", "o8EV-EWcj-m9bI-$%D3-14oY", "2MxU-mmM5-j!$@-@YlK-J99M", "dR8x-GzLv-a9X6-zD##-RCZ6", "4Ovu-8D8v-CzQz-fUmX-w4aw", "N3g5-e7Vd-%Bsx-rcu2-9yMX", "qTcR-MLDo-HUE6-9JAX-%NKq", "?vDr-16yp-?uKh-hpnF-@td8", "*#cJ-A6ax-0n3z-U*a*-MW1F", "Dd81-0h12-vADn-$3I0-T0$8", "SfQe-78ZN-oyrm-*kdz-QBXF", "71F0-Y4%9-UH2V-CHLV-bcCl", "UxPi-q?@8-nOvT-Y9ZZ-qyxA", "MQ#A-MQ9$-mhnc-7H0A-n?Dd", "ltz8-Gu$m-F3C9-NwcK-JmoC", "ziy9-cdQc-R7$1-6s?H-mwxO", "BnTU-7Yv9-OGIB-ID7L-bQy9", "1dkX-mI5!-VgaZ-V*6O-YaCt", "AK?M-BhLE-%okf-td#P-$vIa", "pWu#-gpPp-b7yl-DVoA-WU!1", "WT0O-ffZD-vJr@-1buJ-w1Wy", "fPI#-UddN-*rEi-7NJ1-gQf?", "F2qq-a4@C-2H7B-WW78-Hb0s", "CqH5-gAGB-RmgK-?NlC-m!jB", "dTwS-qMBL-uK@9-N6U?-4AH6", "YsOe-UMlE-8jDV-8QSO-v1DG", "quUl-D#t7-orsh-axa0-YXli", "lQTD-QVM5-tz$e-V1j9-Y0qy", "8x*t-Xdfp-TEBc-hQ!Y-I0sT", "NwYB-iWdG-G1lJ-Cvtv-%EHd", "Y#u!-@V38-hiv*-AWVE-%6$7", "PFAo-gZg9-ybUx-4yut-UzXL", "SBZ5-Lnq!-G3R$-Y5Zo-m2Qw", "v0H@-K5?$-0!nr-$Lsb-y%PL", "h%e4-3zT%-Ll9@-NjvZ-6Xwr", "xdOJ-zZY?-?Xi9-$sr*-9HhA", "t@e@-uzwi-YCsW-EA94-%MsW", "XJDe-WeEj-9gvW-WkE$-TN4K", "Zc5s-PCP1-iYfj-ak?j-XOyJ", "Gl3x-SPM!-5Q!S-OFG0-08gN", "GgNy-lif0-0tkG-dbRZ-qqm$", "6SfE-tQ0J-8#vu-KP5g-xn6T", "JLpy-*i9Y-Vlt0-zz%V-sIqc", "Zova-6ZHR-svcs-4zF6-5Qx3", "C%5r-eonS-jU%w-3lsC-?Mm@", "$s5V-k*5?-H43%-fsqo-GZR?", "L7XQ-D2fB-95K1-udJQ-VKGh", "rP9M-faYU-ljmX-K#F?-Wy8@", "m*0I-q?F!-tvVu-3?@L-DTSp", "%WP0-1cZu-RA5R-NXgm-vKD5", "WD1L-VXK!-WGUE-%J1l-xUa?", "8pkw-wtfZ-ANUd-Qkht-iqY*", "9pIp-mEiH-xEij-7dRX-u3T*", "ZD7@-EXvt-YAoa-XXgG-O2j1", "aaqq-uD2W-Agxn-C6dS-PUee", "rS90-!GQl-Ym92-R?Sg-5OTZ", "MC8c-V#@O-9VBw-j8%t-hi**", "iNrL-u*!k-VD!0-n2K1-Xtl0", "!o18-A!jV-4ir?-dFna-PXrP", "bP9H-mHLs-GuND-YWo9-611G", "w%Da-bo68-W8cF-v@Ho-Iua*", "dFRY-5ZcW-o%df-8K4T-#LqL", "i02*-MTdy-TuBi-j!M7-cnyb", "OA@P-VrSd-PBgj-eocb-Fbat", "W9K!-YZt3-exs7-r514-@k%9", "Ht0x-WEi9-cfE@-eAwK-JyXe", "cnvO-cM7S-SP%I-hq$O-tRCd", "HWgT-RHsy-9TZm-$ohG-37by", "xW$%-jeE@-ZeJ2-CTPj-Xeu$", "ZVLg-prI3-h$Qa-i8aq-hZ$N", "xKJq-V2n*-%LPX-BL0y-6Qt0", "XfzN-fo5d-TY$L-oPSG-eXuH", "lDXd-i9KB-@uNl-YeVx-4NTY", "EGK7-*nk7-fYc@-QNwS-e8CN", "htpb-UTLo-AGaO-9mx8-oSe1", "nStD-l!cn-XbBb-YF?$-PZiW", "xDpJ-nfVm-1jln-n7%%-egFP", "slVd-@M2A-ikKz-T@hD-eNu7", "%qp3-H5%i-jHAO-F26%-ADq3", "Rbw8-2tpc-YBhz-P2FZ-YYhi", "eFHz-f3wg-KN*Z-D2$b-Jxwj", "f#ql-FA$$-*u!Y-Rl#H-x?VE", "XoV?-3$Si-10xC-HjDB-zA$3", "KfJZ-W5TN-sR*N-o6x#-WkWG", "gwDc-#Ca$-4GAJ-6Scf-qrmG", "5L@b-rXoU-W@GZ-pfCd-RfKi", "fMF0-yRJE-Ev9#-68?t-6HqP", "Rr$q-WJkp-1gfN-Bssf-kNbG", "wLY2-o4f%-c$hA-8c9a-LjVX", "HS?V-FK3m-tR@1-V7WC-XDip", "fY?F-ia!p-y3#f-p#I!-6v0e", "VfFZ-In?E-QyCX-6PMm-Kq*%", "@@Ys-nz4K-#lXe-bJLE-fDd8", "mXN@-pAUT-9bUS-VlxO-MkHO"];
 const ADMIN_CODE = "OWN-iqUo-Qlbz-3nOT-4Vlt-iWQU-5Qu7";
 const SUBSCRIPTION_STORAGE_KEY = 'toquiz_subscription_state_v1';
 const DEVICE_STORAGE_KEY = 'toquiz_device_id_v1';
 const BOT_USAGE_PREFIX = 'toquiz_bot_usage_';
 const ADMIN_ACCESS_KEY = 'toquiz_admin_unlocked_v1';
+
+const PLAN_CATALOG = {
+  free: { name: 'Free', label: 'Free', className: 'plan-free', dailyBotLimit: 1, questionLimit: 20 },
+  premium: { name: 'Premium / VIP', label: 'Premium', className: 'plan-premium', dailyBotLimit: Infinity, questionLimit: Infinity },
+  admin: { name: 'Owner / Admin', label: 'Admin', className: 'plan-admin', dailyBotLimit: Infinity, questionLimit: Infinity }
+};
 
 function getOrCreateDeviceId() {
   let id = localStorage.getItem(DEVICE_STORAGE_KEY);
@@ -586,6 +556,7 @@ function getOrCreateDeviceId() {
   }
   return id;
 }
+
 function loadSubscriptionState() {
   const fallback = { tier: 'free', code: null, deviceId: getOrCreateDeviceId(), activatedAt: null, activatedBy: null };
   try {
@@ -595,56 +566,147 @@ function loadSubscriptionState() {
     return Object.assign(fallback, parsed || {});
   } catch (e) { return fallback; }
 }
-function saveSubscriptionState(state) { localStorage.setItem(SUBSCRIPTION_STORAGE_KEY, JSON.stringify(state)); updateSubscriptionUI(); }
+
+function saveSubscriptionState(state) { 
+  localStorage.setItem(SUBSCRIPTION_STORAGE_KEY, JSON.stringify(state)); 
+  updateSubscriptionUI(); 
+}
+
 function getCurrentPlan() { return loadSubscriptionState(); }
 function isAdminUser() { return localStorage.getItem(ADMIN_ACCESS_KEY) === '1' && getCurrentPlan().tier === 'admin'; }
 function isPremiumUser() { const tier = getCurrentPlan().tier; return tier === 'premium' || tier === 'admin'; }
-function getBotDailyLimitForCurrentUser() { const tier = getCurrentPlan().tier; return PLAN_CATALOG[tier] ? PLAN_CATALOG[tier].dailyBotLimit : 1; }
+
 function todayKey() { return new Date().toISOString().slice(0, 10); }
 function getBotUsage() { const key = BOT_USAGE_PREFIX + todayKey(); return parseInt(localStorage.getItem(key) || '0', 10) || 0; }
 function incrementBotUsage() { const key = BOT_USAGE_PREFIX + todayKey(); localStorage.setItem(key, String(getBotUsage() + 1)); }
-function resetExpiredBotUsageKeys() {}
-function setModalStatus(el, msg, type) { if (!el) return; el.className = 'subscription-status ' + (type === 'ok' ? 'ok' : 'err'); el.textContent = msg; }
-function openSubscriptionModal() { const modal = document.getElementById('subscriptionModal'); modal.classList.remove('hidden'); modal.setAttribute('aria-hidden', 'false'); const input = document.getElementById('activationCodeInput'); setTimeout(() => input && input.focus(), 50); }
-function closeSubscriptionModal() { const modal = document.getElementById('subscriptionModal'); modal.classList.add('hidden'); modal.setAttribute('aria-hidden', 'true'); }
-function openAdminModal() { const modal = document.getElementById('adminModal'); modal.classList.remove('hidden'); modal.setAttribute('aria-hidden', 'false'); const input = document.getElementById('adminCodeInput'); setTimeout(() => input && input.focus(), 50); }
-function closeAdminModal() { const modal = document.getElementById('adminModal'); modal.classList.add('hidden'); modal.setAttribute('aria-hidden', 'true'); }
-function showAdminModalFromShortcut() { closeSubscriptionModal(); openAdminModal(); }
-function activateWithCode() {
+
+function setModalStatus(el, msg, type) { 
+  if (!el) return; 
+  el.className = 'subscription-status ' + (type === 'ok' ? 'ok' : 'err'); 
+  el.textContent = msg; 
+}
+
+function openSubscriptionModal() { 
+  const modal = document.getElementById('subscriptionModal'); 
+  modal.classList.remove('hidden'); 
+  modal.setAttribute('aria-hidden', 'false'); 
+  const input = document.getElementById('activationCodeInput'); 
+  setTimeout(() => input && input.focus(), 50); 
+}
+
+function closeSubscriptionModal() { 
+  const modal = document.getElementById('subscriptionModal'); 
+  modal.classList.add('hidden'); 
+  modal.setAttribute('aria-hidden', 'true'); 
+}
+
+function openAdminModal() { 
+  const modal = document.getElementById('adminModal'); 
+  modal.classList.remove('hidden'); 
+  modal.setAttribute('aria-hidden', 'false'); 
+  const input = document.getElementById('adminCodeInput'); 
+  setTimeout(() => input && input.focus(), 50); 
+}
+
+function closeAdminModal() { 
+  const modal = document.getElementById('adminModal'); 
+  modal.classList.add('hidden'); 
+  modal.setAttribute('aria-hidden', 'true'); 
+}
+
+function showAdminModalFromShortcut() { 
+  closeSubscriptionModal(); 
+  openAdminModal(); 
+}
+
+// ------------------------------------------------------
+// NEW: API-Based Activation Logic (Vercel KV Integration)
+// ------------------------------------------------------
+async function activateWithCode() {
   const input = document.getElementById('activationCodeInput');
   const code = (input.value || '').trim();
   const status = document.getElementById('subscriptionStatus');
+  
   if (!code) return setModalStatus(status, 'أدخل الكود أولاً.', 'err');
-  const planState = loadSubscriptionState();
+
   const deviceId = getOrCreateDeviceId();
+
+  // Admin Bypass (Local check)
   if (code === ADMIN_CODE) {
-    planState.tier = 'admin'; planState.code = code; planState.deviceId = deviceId; planState.activatedAt = new Date().toISOString(); planState.activatedBy = 'admin';
-    saveSubscriptionState(planState); localStorage.setItem(ADMIN_ACCESS_KEY, '1'); setModalStatus(status, 'تم تفعيل كود المالك بنجاح.', 'ok');
-    setTimeout(() => { closeSubscriptionModal(); showView('admin'); renderAdminDashboard(); }, 500); return;
+    const planState = loadSubscriptionState();
+    planState.tier = 'admin'; 
+    planState.code = code; 
+    planState.deviceId = deviceId; 
+    planState.activatedAt = new Date().toISOString(); 
+    planState.activatedBy = 'admin';
+    
+    saveSubscriptionState(planState); 
+    localStorage.setItem(ADMIN_ACCESS_KEY, '1'); 
+    setModalStatus(status, 'تم تفعيل كود المالك بنجاح.', 'ok');
+    setTimeout(() => { closeSubscriptionModal(); showView('admin'); }, 500); 
+    return;
   }
-  if (!PREMIUM_CODES.includes(code)) return setModalStatus(status, 'الكود غير صحيح.', 'err');
-  const usedCodes = JSON.parse(localStorage.getItem('toquiz_used_codes_v1') || '{}');
-  if (usedCodes[code] && usedCodes[code].deviceId !== deviceId) return setModalStatus(status, 'هذا الكود مستخدم مسبقاً ولا يمكن إعادة استخدامه.', 'err');
-  planState.tier = 'premium'; planState.code = code; planState.deviceId = deviceId; planState.activatedAt = new Date().toISOString(); planState.activatedBy = 'student';
-  saveSubscriptionState(planState); usedCodes[code] = { status: 'used', deviceId, activatedAt: planState.activatedAt }; localStorage.setItem('toquiz_used_codes_v1', JSON.stringify(usedCodes));
-  setModalStatus(status, 'تم تفعيل الاشتراك بنجاح على هذا الجهاز.', 'ok'); setTimeout(() => closeSubscriptionModal(), 600);
+
+  // Set Loading State
+  setModalStatus(status, 'جاري التحقق من الكود عبر الخادم...', 'ok');
+  
+  try {
+    const response = await fetch('/api/redeem', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, deviceId })
+    });
+    
+    const data = await response.json();
+
+    if (data.success) {
+      const planState = loadSubscriptionState();
+      planState.tier = data.plan;
+      planState.code = code;
+      planState.deviceId = deviceId;
+      planState.activatedAt = new Date().toISOString();
+      planState.activatedBy = 'student';
+      saveSubscriptionState(planState);
+      
+      setModalStatus(status, 'تم تفعيل الاشتراك بنجاح على هذا الجهاز. مبروك!', 'ok'); 
+      setTimeout(() => { closeSubscriptionModal(); location.reload(); }, 1500);
+    } else {
+      setModalStatus(status, data.message || 'الكود غير صحيح.', 'err');
+    }
+  } catch(e) {
+    setModalStatus(status, 'حدث خطأ في الاتصال بالخادم. يرجى المحاولة لاحقاً.', 'err');
+    console.error("Redeem API Error:", e);
+  }
 }
+
 function unlockAdmin() {
   const input = document.getElementById('adminCodeInput');
   const code = (input.value || '').trim();
   const status = document.getElementById('adminStatus');
+  
   if (code !== ADMIN_CODE) return setModalStatus(status, 'كود المالك غير صحيح.', 'err');
+  
   const state = loadSubscriptionState();
-  state.tier = 'admin'; state.code = ADMIN_CODE; state.deviceId = getOrCreateDeviceId(); state.activatedAt = new Date().toISOString(); state.activatedBy = 'admin';
-  saveSubscriptionState(state); localStorage.setItem(ADMIN_ACCESS_KEY, '1'); setModalStatus(status, 'تم فتح لوحة المالك بنجاح.', 'ok');
-  setTimeout(() => { closeAdminModal(); showView('admin'); renderAdminDashboard(); }, 500);
+  state.tier = 'admin'; 
+  state.code = ADMIN_CODE; 
+  state.deviceId = getOrCreateDeviceId(); 
+  state.activatedAt = new Date().toISOString(); 
+  state.activatedBy = 'admin';
+  
+  saveSubscriptionState(state); 
+  localStorage.setItem(ADMIN_ACCESS_KEY, '1'); 
+  setModalStatus(status, 'تم فتح لوحة المالك بنجاح.', 'ok');
+  setTimeout(() => { closeAdminModal(); showView('admin'); }, 500);
 }
+
 function updateSubscriptionUI() {
   const state = getCurrentPlan();
   const badge = document.getElementById('planBadge');
   if (badge) { badge.className = 'plan-badge ' + PLAN_CATALOG[state.tier].className; badge.innerHTML = `<span class="dot"></span>${PLAN_CATALOG[state.tier].name}`; }
+  
   const topBadge = document.getElementById('topPlanBadge');
   if (topBadge) { topBadge.className = 'plan-badge ' + PLAN_CATALOG[state.tier].className; topBadge.innerHTML = `<span class="dot"></span>${PLAN_CATALOG[state.tier].label}`; }
+  
   const activationInfo = document.getElementById('activationSummary');
   if (activationInfo) {
     const codeText = state.code ? state.code : 'لا يوجد كود';
@@ -656,51 +718,60 @@ function updateSubscriptionUI() {
       <div class="admin-stat"><span>معرّف الجهاز</span><h3 style="font-size:18px;word-break:break-all;">${state.deviceId || getOrCreateDeviceId()}</h3></div>
     `;
   }
+  
   const adminHint = document.getElementById('adminHint');
   if (adminHint) adminHint.style.display = isAdminUser() ? 'block' : 'none';
-  if (document.getElementById('adminCodeTable') && isAdminUser()) renderAdminDashboard();
 }
-function renderAdminDashboard() {
-  if (!isAdminUser()) return;
-  const usedCodes = JSON.parse(localStorage.getItem('toquiz_used_codes_v1') || '{}');
-  const rows = PREMIUM_CODES.map(code => {
-    const info = usedCodes[code]; const used = !!info;
-    const status = used ? '<span class="badge-used">used</span>' : '<span class="badge-unused">unused</span>';
-    const device = (info && info.deviceId) ? info.deviceId : '—';
-    const dt = (info && info.activatedAt) ? new Date(info.activatedAt).toLocaleString('ar-JO') : '—';
-    return `<tr><td style="font-family:monospace;word-break:break-all;">${code}</td><td>Premium / VIP</td><td>${status}</td><td style="font-family:monospace;word-break:break-all;">${device}</td><td>${dt}</td></tr>`;
-  }).join('');
-  const adminTable = document.getElementById('adminCodeTable'); if (adminTable) adminTable.innerHTML = rows;
-  const total = PREMIUM_CODES.length; const usedCount = Object.keys(usedCodes).filter(k => PREMIUM_CODES.includes(k)).length; const activeDevices = new Set(Object.values(usedCodes).map(v => v && v.deviceId).filter(Boolean)).size;
-  const totalEl = document.getElementById('adminTotalCodes'); const usedEl = document.getElementById('adminUsedCodes'); const unusedEl = document.getElementById('adminUnusedCodes'); const devicesEl = document.getElementById('adminActiveDevices');
-  if (totalEl) totalEl.innerText = total; if (usedEl) usedEl.innerText = usedCount; if (unusedEl) unusedEl.innerText = total - usedCount; if (devicesEl) devicesEl.innerText = activeDevices;
+
+function clearAdminCache() { 
+  if (!confirm('سيتم تسجيل الخروج وتصفير بيانات التفعيل المحلية على هذا المتصفح. متابعة؟')) return; 
+  localStorage.removeItem(SUBSCRIPTION_STORAGE_KEY); 
+  localStorage.removeItem(ADMIN_ACCESS_KEY); 
+  updateSubscriptionUI(); 
+  alert('تم تسجيل الخروج المحلي.');
+  window.location.reload();
 }
-function copyCodesText() { const text = PREMIUM_CODES.join('\n'); navigator.clipboard.writeText(text).then(() => alert('تم نسخ الأكواد.')); }
-function exportCodesJson() {
-  const usedCodes = JSON.parse(localStorage.getItem('toquiz_used_codes_v1') || '{}');
-  const payload = { adminCode: ADMIN_CODE, codes: PREMIUM_CODES.map(code => ({ code, status: usedCodes[code] ? 'used' : 'unused', deviceId: usedCodes[code] ? usedCodes[code].deviceId : null, activatedAt: usedCodes[code] ? usedCodes[code].activatedAt : null })) };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'toquiz-codes.json'; a.click(); URL.revokeObjectURL(url);
+
+function initSubscriptionSystem() { 
+  getOrCreateDeviceId(); 
+  updateSubscriptionUI(); 
+  document.addEventListener('keydown', (e) => { 
+    if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) { 
+      e.preventDefault(); 
+      openAdminModal(); 
+    } 
+    if (e.key === 'Escape') { 
+      closeSubscriptionModal(); 
+      closeAdminModal(); 
+    } 
+  }); 
 }
-function clearAdminCache() { if (!confirm('سيتم تصفير بيانات التفعيل المحلية فقط على هذا المتصفح. متابعة؟')) return; localStorage.removeItem(SUBSCRIPTION_STORAGE_KEY); localStorage.removeItem(ADMIN_ACCESS_KEY); localStorage.removeItem('toquiz_used_codes_v1'); updateSubscriptionUI(); renderAdminDashboard(); alert('تم التصفير المحلي.'); }
-function initSubscriptionSystem() { getOrCreateDeviceId(); resetExpiredBotUsageKeys(); updateSubscriptionUI(); document.addEventListener('keydown', (e) => { if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) { e.preventDefault(); openAdminModal(); } if (e.key === 'Escape') { closeSubscriptionModal(); closeAdminModal(); } }); }
-function showUpgradeLock(message) { return `<div class="lock-box">${message}</div><div style="margin-top:14px;"><button class="btn" onclick="openSubscriptionModal()">تفعيل الاشتراك</button></div>`; }
+
+function showUpgradeLock(message) { 
+  return `<div class="lock-box">${message}</div><div style="margin-top:14px;"><button class="btn" onclick="openSubscriptionModal()">تفعيل الاشتراك</button></div>`; 
+}
+
+// ======================================================
+// MAIN INIT
+// ======================================================
 document.addEventListener("DOMContentLoaded", async () => {
   initTheme();
   startMinistryCountdown();
   updateStreak();
   initSubscriptionSystem();
   initProfile();
+  
   // Load questions from external file, fall back to embedded
   try {
     const res = await fetch('questions.json');
     if (res.ok) ALL_QUESTIONS = await res.json();
     else throw new Error('fetch failed');
   } catch(e) {
-    // If fetch fails (e.g. opened as local file), ALL_QUESTIONS already has embedded data
+    // If fetch fails, ALL_QUESTIONS already has embedded data
   }
+  
   renderSubjectsGrid();
   updateSubscriptionUI();
-  if (isAdminUser()) renderAdminDashboard();
 });
 
 // ======================================================
@@ -712,7 +783,6 @@ function showView(id) {
   if (el) el.classList.remove('hidden');
   window.scrollTo(0, 0);
   if (id === 'profile') initProfile();
-  if (id === 'admin' && isAdminUser()) renderAdminDashboard();
 }
 
 // ======================================================
@@ -751,7 +821,7 @@ function updateStreak() {
   let lastVisitDateStr = localStorage.getItem('lastVisitDateStr');
   let streak = parseInt(localStorage.getItem('streak')) || 1;
   let today = new Date();
-  let todayStr = today.toDateString(); // e.g., "Mon Mar 30 2026"
+  let todayStr = today.toDateString(); 
 
   if (lastVisitDateStr) {
       if (lastVisitDateStr !== todayStr) {
@@ -775,8 +845,12 @@ function updateStreak() {
   streakEls.forEach(el => { if(el) el.innerText = streak; });
 }
 
+function getSubjectQuestions(subjectName) {
+  return ALL_QUESTIONS.filter(q => q.subject === subjectName);
+}
+
 // ======================================================
-// SUBJECTS GRID
+// SUBJECTS & LESSONS GRID
 // ======================================================
 function renderSubjectsGrid() {
   const grid = document.getElementById('subjectsGrid');
@@ -844,7 +918,6 @@ function showSummaries() {
 // ======================================================
 // EXAM ENGINE
 // ======================================================
-
 function startLessonExam(subject, lessonName, questions) {
   if (!isPremiumUser() && questions.length > 20) {
     questions = questions.slice(0, 20);
@@ -861,7 +934,6 @@ function startLessonExam(subject, lessonName, questions) {
     lessonName: lessonName
   };
 
-  // Start timer
   clearInterval(currentExam.timerInterval);
   currentExam.timerInterval = setInterval(() => {
     currentExam.timerSec++;
@@ -876,7 +948,6 @@ function startLessonExam(subject, lessonName, questions) {
   renderQuestion();
 }
 
-
 function renderQuestion() {
   const exam = currentExam;
   const q = exam.questions[exam.currentIdx];
@@ -888,11 +959,9 @@ function renderQuestion() {
   document.getElementById('questionText').innerText = q.question;
   document.getElementById('progressBar').style.width = ((idx + 1) / total * 100) + '%';
 
-  // Prev btn
   const prevBtn = document.getElementById('prevBtn');
   prevBtn.style.visibility = idx === 0 ? 'hidden' : 'visible';
 
-  // Next/Finish btn
   const nxtBtn = document.getElementById('nextOrFinishBtn');
   if (idx === total - 1) {
     nxtBtn.innerHTML = 'إنهاء الامتحان <i class="fa fa-flag-checkered"></i>';
@@ -900,7 +969,6 @@ function renderQuestion() {
     nxtBtn.innerHTML = 'التالي <i class="fa fa-arrow-left"></i>';
   }
 
-  // Options
   const letters = ['أ', 'ب', 'ج', 'د'];
   const container = document.getElementById('optionsContainer');
   container.innerHTML = '';
@@ -919,7 +987,6 @@ function renderQuestion() {
 
 function selectOption(optionIdx) {
   currentExam.userAnswers[currentExam.currentIdx] = optionIdx;
-  // Re-render to show selection
   const btns = document.querySelectorAll('.option-btn');
   const letters = ['أ', 'ب', 'ج', 'د'];
   btns.forEach((btn, i) => {
@@ -970,10 +1037,8 @@ function finishExam() {
   const total = exam.questions.length;
   const percent = Math.round((correct / total) * 100);
 
-  // Save stats
   recordExamStats(correct, wrong + unanswered, exam.subject.name);
 
-  // Result messages
   let msg = '', sub = '';
   if (percent >= 90) { msg = '🏆 ممتاز! أداء رائع جداً!'; sub = 'أنت على المسار الصحيح للنجاح بتفوق.'; }
   else if (percent >= 75) { msg = '🌟 جيد جداً! استمر على هذا المستوى'; sub = 'مراجعة بسيطة ستجعلك في القمة.'; }
@@ -988,7 +1053,6 @@ function finishExam() {
   document.getElementById('result-msg').innerText = msg;
   document.getElementById('result-sub').innerText = sub;
 
-  // Build review
   const reviewList = document.getElementById('review-list');
   reviewList.innerHTML = '';
   const letters = ['أ', 'ب', 'ج', 'د'];
@@ -1017,7 +1081,6 @@ function finishExam() {
 
   showView('result');
 }
-
 
 function toggleReview() {
   const reviewDiv = document.getElementById('answers-review');
@@ -1078,7 +1141,6 @@ function initProfile() {
     document.getElementById('profile-setup').classList.remove('hidden');
     document.getElementById('profile-dashboard').classList.add('hidden');
   }
-  updateSubscriptionUI();
 }
 
 function saveStudentName() {
@@ -1109,7 +1171,6 @@ async function sendSalah() {
 
   let msgContainer = document.getElementById('salahMessages');
 
-  // تطبيق قيد الأسئلة اليومية للباقة المجانية (سؤال واحد فقط)
   if (!isPremiumUser()) {
     if (getBotUsage() >= 1) {
       let limitMsg = document.createElement('div');
@@ -1119,7 +1180,7 @@ async function sendSalah() {
       msgContainer.scrollTop = msgContainer.scrollHeight;
       return;
     } else {
-      incrementBotUsage(); // إضافة الاستخدام لليوم
+      incrementBotUsage();
     }
   }
 
@@ -1142,7 +1203,6 @@ async function sendSalah() {
   ];
 
   try {
-    // Calls the server-side proxy — API key stays on the server, never exposed in browser
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
